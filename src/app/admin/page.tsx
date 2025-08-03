@@ -17,6 +17,7 @@ import PropertyTable from "@/components/admin/PropertyTable";
 import PropertyForm from "@/components/admin/PropertyForm";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 
 export default function AdminPage() {
   const { toast } = useToast();
@@ -78,20 +79,27 @@ export default function AdminPage() {
     }
   };
 
-  const handleFormSubmit = async (values: Omit<Property, 'id' | 'agent' | 'listingStatus' | 'images'>) => {
+  const handleFormSubmit = async (values: PropertyFormValues) => {
     try {
+      const { images, ...restOfValues } = values;
+      const validImages = images.filter(img => img && img.startsWith('https://'));
+      
       if (selectedProperty) {
         const propDoc = doc(db, "properties", selectedProperty.id);
-        await updateDoc(propDoc, values);
+        const updatedData = {
+            ...restOfValues,
+            images: validImages.length > 0 ? validImages : selectedProperty.images,
+        };
+        await updateDoc(propDoc, updatedData);
         toast({
           title: "Property Updated",
           description: "The property details have been successfully updated.",
         });
       } else {
         const newPropertyData = {
-          ...values,
-          images: ['https://placehold.co/800x600.png'],
-          listingStatus: 'For Rent',
+          ...restOfValues,
+          images: validImages.length > 0 ? validImages : ['https://placehold.co/800x600.png'],
+          listingStatus: 'For Rent' as const,
           agent: {
             name: 'Mr. David Okoro',
             agency: 'Christif Properties',

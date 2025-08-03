@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import type { Property } from '@/lib/types';
@@ -45,9 +45,10 @@ const formSchema = z.object({
   type: z.enum(['Duplex', 'Bungalow', 'Apartment', 'Detached House', 'Commercial']),
   description: z.string().min(20, 'Description must be at least 20 characters.'),
   amenities: z.string().transform(val => val.split(',').map(s => s.trim()).filter(Boolean)),
+  images: z.array(z.string().url().or(z.literal(''))).max(5, "You can add up to 5 images."),
 });
 
-type PropertyFormValues = Omit<Property, 'id' | 'agent' | 'listingStatus' | 'images'>;
+export type PropertyFormValues = Omit<Property, 'id' | 'agent' | 'listingStatus'>;
 
 type PropertyFormProps = {
   onSubmit: (values: PropertyFormValues) => void;
@@ -64,6 +65,7 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
     type: property?.type || 'Apartment',
     description: property?.description || '',
     amenities: property?.amenities || [],
+    images: property?.images || [],
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,11 +73,15 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
     defaultValues: {
       ...defaultValues,
       amenities: Array.isArray(defaultValues.amenities) ? defaultValues.amenities.join(', ') : '',
+      images: Array.isArray(defaultValues.images) ? [...defaultValues.images, ...Array(5 - defaultValues.images.length).fill('')] : Array(5).fill(''),
     },
   });
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    onSubmit(values);
+    onSubmit({
+      ...values,
+      amenities: Array.isArray(values.amenities) ? values.amenities : values.amenities.split(',').map(s => s.trim()).filter(Boolean),
+    });
     form.reset();
   };
 
@@ -133,6 +139,27 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
               )}
             />
           </div>
+
+          <div className="space-y-4 rounded-md border p-4">
+             <h3 className="font-semibold text-lg text-navy-blue">Images</h3>
+             <div className="space-y-4">
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <FormField
+                    key={index}
+                    control={form.control}
+                    name={`images.${index}` as const}
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Image {index + 1} URL</FormLabel>
+                        <FormControl><Input placeholder="https://example.com/image.png" {...field} /></FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                ))}
+             </div>
+          </div>
+          
 
           <div className="space-y-4 rounded-md border p-4">
              <h3 className="font-semibold text-lg text-navy-blue">Location</h3>
