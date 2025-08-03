@@ -1,46 +1,62 @@
 
 'use server';
 
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/lib/firebase';
+function fileToDataUri(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
-export async function uploadImages(formData: FormData): Promise<string[]> {
-  const imageFiles = formData.getAll('images') as File[];
-  const imageUrls: string[] = [];
+async function convertFilesToDataUris(files: FileList): Promise<string[]> {
+    const dataUris = [];
+    for (const file of Array.from(files)) {
+        try {
+            const dataUri = await fileToDataUri(file);
+            dataUris.push(dataUri);
+        } catch (error) {
+            console.error(`Failed to read file ${file.name}:`, error);
+        }
+    }
+    return dataUris;
+}
 
-  if (!imageFiles || imageFiles.length === 0) {
-    return [];
+export async function uploadImages(files: FileList): Promise<string[]> {
+  // This is a browser-only implementation, so we need to "emulate" it on the server
+  // by throwing an error if it's called in a non-browser environment. In our case,
+  // we will call a different function that does the real work.
+  if (typeof window === 'undefined') {
+    throw new Error('This function can only be called on the client.');
   }
 
+  const fileArray = Array.from(files);
+
+  const dataUriPromises = fileArray.map(file =>
+    new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = event => {
+        if (event.target?.result) {
+          resolve(event.target.result as string);
+        } else {
+          reject(new Error('Failed to read file.'));
+        }
+      };
+      reader.onerror = error => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    })
+  );
+
   try {
-    for (const imageFile of imageFiles) {
-      if (imageFile.size === 0) continue;
-
-      // Convert the file to a buffer for server-side upload
-      const arrayBuffer = await imageFile.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      // Create a storage reference
-      const storageRef = ref(storage, `properties/${Date.now()}-${imageFile.name}`);
-      
-      // Upload the file buffer
-      await uploadBytes(storageRef, buffer, {
-        contentType: imageFile.type,
-      });
-      
-      // Get the download URL and add it to our array
-      const url = await getDownloadURL(storageRef);
-      imageUrls.push(url);
-    }
-    
-    return imageUrls;
-
+    const dataUris = await Promise.all(dataUriPromises);
+    return dataUris;
   } catch (error) {
-    console.error("Firebase Upload Error:", error);
-    // Re-throw the error with a more specific message to be caught by the client
-    if (error instanceof Error) {
-        throw new Error(`Firebase Upload Failed: ${error.message}`);
-    }
-    throw new Error("An unknown error occurred during image upload.");
+    console.error('Error converting files to data URIs:', error);
+    throw new Error('Failed to process one or more images.');
   }
 }

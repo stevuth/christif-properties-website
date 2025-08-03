@@ -90,12 +90,7 @@ export default function AdminPage() {
       
       const imageFiles = values.images as FileList | null;
       if (imageFiles && imageFiles.length > 0) {
-        const formData = new FormData();
-        Array.from(imageFiles).forEach(file => {
-          formData.append('images', file);
-        });
-
-        const newImageUrls = await uploadImages(formData);
+        const newImageUrls = await uploadImages(imageFiles);
         imageUrls = [...imageUrls, ...newImageUrls];
       }
 
