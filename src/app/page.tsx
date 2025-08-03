@@ -59,24 +59,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="browse-by-category" className="w-full bg-off-white py-16 md:py-24">
-         <div className="container mx-auto max-w-7xl px-4">
-            <div className="text-center">
-                <h2 className="font-headline text-4xl font-bold text-navy-blue">Browse By Category</h2>
-                <p className="mx-auto mt-4 max-w-2xl text-lg text-warm-gray">Find the type of property that suits your needs.</p>
-            </div>
-            <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-1">
-                 <Link href="/#listings" className="group relative block h-64 overflow-hidden rounded-lg">
-                     <Image src="https://picsum.photos/seed/rent/1200/400" alt="Properties for rent" fill className="object-cover transition-transform duration-500 group-hover:scale-110" data-ai-hint="apartment building exterior" />
-                     <div className="absolute inset-0 bg-black/50"></div>
-                     <div className="relative flex h-full items-center justify-center">
-                         <h3 className="font-headline text-4xl font-bold text-white">For Rent</h3>
-                     </div>
-                 </Link>
-            </div>
-         </div>
-      </section>
-
       <PropertyListings properties={properties} />
     </div>
   );
