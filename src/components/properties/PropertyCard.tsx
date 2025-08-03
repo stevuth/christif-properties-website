@@ -3,7 +3,8 @@
 import type { Property } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BedDouble, Bath, SquareGanttChart, Car, Armchair } from 'lucide-react';
+import { BedDouble, Bath, Armchair } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 type PropertyCardProps = {
   property: Property;
@@ -11,21 +12,23 @@ type PropertyCardProps = {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   return (
-    <Link href={`/property/${property.id}`} className="group block">
-      <div className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
-        <div className="relative aspect-video overflow-hidden">
-          <Image
-            src={property.images[0]}
-            alt={property.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            data-ai-hint="house exterior"
-          />
-        </div>
-        <div className="p-4">
+    <div className="group block">
+      <div className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-xl flex flex-col h-full">
+        <Link href={`/property/${property.id}`}>
+          <div className="relative aspect-video overflow-hidden">
+            <Image
+              src={property.images[0]}
+              alt={property.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              data-ai-hint="house exterior"
+            />
+          </div>
+        </Link>
+        <div className="p-4 flex flex-col flex-grow">
           <h3 className="truncate font-headline text-xl font-bold text-navy-blue">
-            {property.title}
+             <Link href={`/property/${property.id}`}>{property.title}</Link>
           </h3>
           <p className="truncate text-warm-gray">{property.location.area}, {property.location.city}</p>
           <p className="mt-2 font-headline text-2xl font-bold text-golden-sand">
@@ -45,8 +48,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               <span>{property.features.toilets} Toilets</span>
             </div>
           </div>
+          <div className="mt-auto pt-4">
+            <Link href={`/property/${property.id}`} className="w-full">
+                <Button className="w-full bg-navy-blue text-white hover:bg-navy-blue/90">View Details</Button>
+            </Link>
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
