@@ -1,3 +1,4 @@
+
 import PropertyListings from '@/components/properties/PropertyListings';
 import { getProperties } from '@/lib/properties';
 import Image from 'next/image';
