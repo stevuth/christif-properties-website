@@ -3,8 +3,7 @@
 
 import * as React from "react";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import type { Property } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,12 +12,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import PropertyTable from "@/components/admin/PropertyTable";
 import PropertyForm from "@/components/admin/PropertyForm";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
+import { uploadImages } from "@/app/admin/actions";
+
 
 export default function AdminPage() {
   const { toast } = useToast();
@@ -81,23 +83,17 @@ export default function AdminPage() {
     }
   };
   
-  const uploadImages = async (images: FileList): Promise<string[]> => {
-    const imageUrls: string[] = [];
-    for (const image of Array.from(images)) {
-      const storageRef = ref(storage, `properties/${Date.now()}-${image.name}`);
-      await uploadBytes(storageRef, image);
-      const url = await getDownloadURL(storageRef);
-      imageUrls.push(url);
-    }
-    return imageUrls;
-  };
-
   const handleFormSubmit = async (values: PropertyFormValues) => {
     setSubmitting(true);
     try {
       let imageUrls: string[] = [];
       if (values.images && values.images.length > 0) {
-        imageUrls = await uploadImages(values.images);
+        const imageFiles = Array.from(values.images);
+        const formData = new FormData();
+        imageFiles.forEach((file) => {
+          formData.append('images', file);
+        });
+        imageUrls = await uploadImages(formData);
       }
 
       const { images, amenities, ...restOfValues } = values;
@@ -141,7 +137,7 @@ export default function AdminPage() {
        console.error("Error submitting form: ", error);
        toast({
          title: "Error",
-         description: "An error occurred while saving the property.",
+         description: "An error occurred while saving the property. Please check the console for details.",
          variant: "destructive",
        });
     } finally {
@@ -164,6 +160,9 @@ export default function AdminPage() {
               <DialogTitle className="font-headline text-2xl text-navy-blue">
                 {selectedProperty ? "Edit Property" : "Add New Property"}
               </DialogTitle>
+              <DialogDescription>
+                  {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
+              </DialogDescription>
             </DialogHeader>
             <PropertyForm
               onSubmit={handleFormSubmit}
