@@ -7,7 +7,7 @@ export default function AboutPage() {
     <div className="bg-background text-charcoal-black">
       <section className="relative h-[40vh] w-full">
         <Image
-          src="https://placehold.co/1920x800"
+          src="https://placehold.co/1920x800.png"
           alt="Modern building in Enugu"
           data-ai-hint="modern architecture nigeria"
           fill
@@ -49,7 +49,7 @@ export default function AboutPage() {
             </div>
             <div>
               <Image
-                src="https://placehold.co/600x400"
+                src="https://placehold.co/600x400.png"
                 alt="Enugu cityscape"
                 data-ai-hint="enugu cityscape"
                 width={600}

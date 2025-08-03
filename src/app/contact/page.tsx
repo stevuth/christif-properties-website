@@ -7,7 +7,7 @@ export default function ContactPage() {
     <div className="bg-background text-charcoal-black">
       <section className="relative h-[40vh] w-full">
         <Image
-          src="https://placehold.co/1920x800"
+          src="https://placehold.co/1920x800.png"
           alt="Contact us background"
           data-ai-hint="office building nigeria"
           fill

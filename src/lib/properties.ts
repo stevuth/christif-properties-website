@@ -23,10 +23,10 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'A newly built, exquisitely finished 4-bedroom duplex in the highbrow area of GRA, Enugu. This property boasts of modern facilities, ample parking space, and a serene environment perfect for a family.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['POP Ceiling', 'Air Conditioning', 'Borehole Water', '24/7 Security', 'Fitted Kitchen', 'Walk-in Wardrobes'],
     agent: {
@@ -34,7 +34,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5678',
       email: 'david.okoro@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
   {
@@ -59,9 +59,9 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'A clean and well-maintained 3-bedroom bungalow located in a secure estate. This home offers a spacious living room, all rooms en-suite, and a fitted kitchen. Ideal for those seeking comfort and tranquility.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['POP Ceiling', 'Borehole Water', 'Gated Estate', 'Fitted Kitchen'],
     agent: {
@@ -69,7 +69,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5679',
       email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
    {
@@ -94,10 +94,10 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'An architectural masterpiece, this 5-bedroom detached house comes with a BQ, swimming pool, and a large compound. It is perfect for expatriates, executives, and families who value luxury and space.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['Swimming Pool', 'Boys Quarters', 'POP Ceiling', 'Air Conditioning', '24/7 Security', 'Fitted Kitchen'],
     agent: {
@@ -105,7 +105,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5678',
       email: 'david.okoro@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
   {
@@ -130,8 +130,8 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'A neat and modern 2-bedroom flat in a block of apartments. Located in a lively neighborhood with good road access. The property is well-maintained and offers good value for money.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['Tiled Floors', 'Wardrobes', 'Kitchen Cabinets', 'Borehole Water'],
     agent: {
@@ -139,7 +139,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5679',
       email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
   {
@@ -164,8 +164,8 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'An open-plan office space on a major road, suitable for a bank, showroom, or corporate office. The property has high visibility and ample parking space for staff and customers.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['Ample Parking', 'High Visibility', 'Generator House', 'Security Post'],
     agent: {
@@ -173,7 +173,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5678',
       email: 'david.okoro@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
    {
@@ -198,8 +198,8 @@ const properties: Property[] = [
     listingStatus: 'For Rent',
     description: 'A modern, serviced one-bedroom apartment perfect for a young professional or couple. Comes with a generator, water treatment plant, and cleaning services. Pay and move in.',
     images: [
-      'https://placehold.co/800x600',
-      'https://placehold.co/800x600',
+      'https://placehold.co/800x600.png',
+      'https://placehold.co/800x600.png',
     ],
     amenities: ['Generator', 'Water Treatment', 'Cleaning Service', '24/7 Security'],
     agent: {
@@ -207,7 +207,7 @@ const properties: Property[] = [
       agency: 'Christif Properties',
       phone: '+234 801 234 5679',
       email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://placehold.co/100x100',
+      avatar: 'https://placehold.co/100x100.png',
     },
   },
 ];
