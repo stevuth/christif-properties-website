@@ -37,28 +37,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="curated-collection"
-        className="w-full bg-background py-16 md:py-24"
-      >
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center">
-            <h2 className="font-headline text-4xl font-bold text-navy-blue">
-              Curated Collection
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-warm-gray">
-              Handpicked properties available for rent in prime locations across
-              Enugu.
-            </p>
-          </div>
-          <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {curatedProperties.map((property) => (
-               <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       <PropertyListings properties={properties} />
     </div>
   );
