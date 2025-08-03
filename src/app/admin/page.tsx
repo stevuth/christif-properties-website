@@ -11,8 +11,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogDescription,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import PropertyTable from "@/components/admin/PropertyTable";
 import PropertyForm from "@/components/admin/PropertyForm";
@@ -86,36 +86,35 @@ export default function AdminPage() {
   const handleFormSubmit = async (values: PropertyFormValues) => {
     setSubmitting(true);
     try {
-      let imageUrls: string[] = [];
+      let imageUrls: string[] = selectedProperty?.images || [];
       if (values.images && values.images.length > 0) {
-        const imageFiles = Array.from(values.images);
         const formData = new FormData();
-        imageFiles.forEach((file) => {
-          formData.append('images', file);
-        });
-        imageUrls = await uploadImages(formData);
+        for (const image of Array.from(values.images)) {
+            formData.append('images', image as File);
+        }
+        const newImageUrls = await uploadImages(formData);
+        imageUrls = [...imageUrls, ...newImageUrls];
       }
 
       const { images, amenities, ...restOfValues } = values;
       const amenitiesArray = Array.isArray(amenities) ? amenities : (amenities as string).split(',').map(s => s.trim()).filter(Boolean);
+      
+      const propertyData = {
+          ...restOfValues,
+          amenities: amenitiesArray,
+          images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
+      };
 
       if (selectedProperty) {
         const propDoc = doc(db, "properties", selectedProperty.id);
-        const updatedData = {
-            ...restOfValues,
-            amenities: amenitiesArray,
-            images: imageUrls.length > 0 ? imageUrls : selectedProperty.images,
-        };
-        await updateDoc(propDoc, updatedData);
+        await updateDoc(propDoc, propertyData);
         toast({
           title: "Property Updated",
           description: "The property details have been successfully updated.",
         });
       } else {
         const newPropertyData = {
-          ...restOfValues,
-          amenities: amenitiesArray,
-          images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
+          ...propertyData,
           listingStatus: 'For Rent' as const,
           agent: {
             name: 'Mr. David Okoro',
