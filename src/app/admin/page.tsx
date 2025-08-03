@@ -3,7 +3,8 @@
 
 import * as React from "react";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 import type { Property } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ export default function AdminPage() {
   const { toast } = useToast();
   const [properties, setProperties] = React.useState<Property[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [isSubmitting, setSubmitting] = React.useState(false);
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedProperty, setSelectedProperty] = React.useState<Property | null>(null);
 
@@ -78,17 +80,35 @@ export default function AdminPage() {
         });
     }
   };
+  
+  const uploadImages = async (images: FileList): Promise<string[]> => {
+    const imageUrls: string[] = [];
+    for (const image of Array.from(images)) {
+      const storageRef = ref(storage, `properties/${Date.now()}-${image.name}`);
+      await uploadBytes(storageRef, image);
+      const url = await getDownloadURL(storageRef);
+      imageUrls.push(url);
+    }
+    return imageUrls;
+  };
 
   const handleFormSubmit = async (values: PropertyFormValues) => {
+    setSubmitting(true);
     try {
-      const { images, ...restOfValues } = values;
-      const validImages = images.filter(img => img && img.startsWith('https://'));
-      
+      let imageUrls: string[] = [];
+      if (values.images && values.images.length > 0) {
+        imageUrls = await uploadImages(values.images);
+      }
+
+      const { images, amenities, ...restOfValues } = values;
+      const amenitiesArray = Array.isArray(amenities) ? amenities : (amenities as string).split(',').map(s => s.trim()).filter(Boolean);
+
       if (selectedProperty) {
         const propDoc = doc(db, "properties", selectedProperty.id);
         const updatedData = {
             ...restOfValues,
-            images: validImages.length > 0 ? validImages : selectedProperty.images,
+            amenities: amenitiesArray,
+            images: imageUrls.length > 0 ? imageUrls : selectedProperty.images,
         };
         await updateDoc(propDoc, updatedData);
         toast({
@@ -98,7 +118,8 @@ export default function AdminPage() {
       } else {
         const newPropertyData = {
           ...restOfValues,
-          images: validImages.length > 0 ? validImages : ['https://placehold.co/800x600.png'],
+          amenities: amenitiesArray,
+          images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
           listingStatus: 'For Rent' as const,
           agent: {
             name: 'Mr. David Okoro',
@@ -114,7 +135,7 @@ export default function AdminPage() {
           description: "The new property has been added to the list.",
         });
       }
-      fetchProperties(); // Re-fetch properties to show the updated list
+      fetchProperties();
       setDialogOpen(false);
     } catch (error) {
        console.error("Error submitting form: ", error);
@@ -123,6 +144,8 @@ export default function AdminPage() {
          description: "An error occurred while saving the property.",
          variant: "destructive",
        });
+    } finally {
+        setSubmitting(false);
     }
   };
 
@@ -145,6 +168,7 @@ export default function AdminPage() {
             <PropertyForm
               onSubmit={handleFormSubmit}
               property={selectedProperty}
+              isSubmitting={isSubmitting}
             />
           </DialogContent>
         </Dialog>

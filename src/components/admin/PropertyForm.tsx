@@ -25,6 +25,9 @@ import {
 } from "@/components/ui/select";
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
 const formSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
   price: z.coerce.number().min(0, 'Price must be a positive number.'),
@@ -45,44 +48,43 @@ const formSchema = z.object({
   type: z.enum(['Duplex', 'Bungalow', 'Apartment', 'Detached House', 'Commercial']),
   description: z.string().min(20, 'Description must be at least 20 characters.'),
   amenities: z.string().transform(val => val.split(',').map(s => s.trim()).filter(Boolean)),
-  images: z.array(z.string().url().or(z.literal(''))).max(5, "You can add up to 5 images."),
+  images: z.any()
+    .refine((files) => files?.length <= 5, "You can add up to 5 images.")
+    .refine((files) => Array.from(files).every((file: any) => file instanceof File), "Expected a file list.")
+    .refine((files) => Array.from(files).every((file: any) => file.size <= MAX_FILE_SIZE), `Max file size is 5MB.`)
+    .refine(
+      (files) => Array.from(files).every((file: any) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
+      ".jpg, .jpeg, .png and .webp files are accepted."
+    ).optional(),
 });
 
-export type PropertyFormValues = Omit<Property, 'id' | 'agent' | 'listingStatus'>;
+export type PropertyFormValues = z.infer<typeof formSchema>;
 
 type PropertyFormProps = {
   onSubmit: (values: PropertyFormValues) => void;
   property: Property | null;
+  isSubmitting?: boolean;
 };
 
-export default function PropertyForm({ onSubmit, property }: PropertyFormProps) {
+export default function PropertyForm({ onSubmit, property, isSubmitting }: PropertyFormProps) {
   
-  const defaultValues: PropertyFormValues = {
+  const defaultValues = {
     title: property?.title || '',
     price: property?.price || 0,
     location: property?.location || { address: '', area: '', city: 'Enugu', state: 'Enugu State' },
     features: property?.features || { bedrooms: 0, bathrooms: 0, toilets: 0, parking: 0, sizeSqm: 0, yearBuilt: new Date().getFullYear() },
     type: property?.type || 'Apartment',
     description: property?.description || '',
-    amenities: property?.amenities || [],
-    images: property?.images || [],
+    amenities: Array.isArray(property?.amenities) ? property.amenities.join(', ') : '',
   }
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<PropertyFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      ...defaultValues,
-      amenities: Array.isArray(defaultValues.amenities) ? defaultValues.amenities.join(', ') : '',
-      images: Array.isArray(defaultValues.images) ? [...defaultValues.images, ...Array(5 - defaultValues.images.length).fill('')] : Array(5).fill(''),
-    },
+    defaultValues,
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    onSubmit({
-      ...values,
-      amenities: Array.isArray(values.amenities) ? values.amenities : values.amenities.split(',').map(s => s.trim()).filter(Boolean),
-    });
-    form.reset();
+  const handleSubmit = (values: PropertyFormValues) => {
+    onSubmit(values);
   };
 
   return (
@@ -139,27 +141,20 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
               )}
             />
           </div>
-
-          <div className="space-y-4 rounded-md border p-4">
-             <h3 className="font-semibold text-lg text-navy-blue">Images</h3>
-             <div className="space-y-4">
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <FormField
-                    key={index}
-                    control={form.control}
-                    name={`images.${index}` as const}
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Image {index + 1} URL</FormLabel>
-                        <FormControl><Input placeholder="https://example.com/image.png" {...field} /></FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                    />
-                ))}
-             </div>
-          </div>
           
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Images (up to 5)</FormLabel>
+                <FormControl>
+                  <Input type="file" multiple accept="image/*" onChange={(e) => field.onChange(e.target.files)} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <div className="space-y-4 rounded-md border p-4">
              <h3 className="font-semibold text-lg text-navy-blue">Location</h3>
@@ -249,8 +244,8 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
           </div>
         </ScrollArea>
         <div className="flex justify-end gap-4 pt-8">
-            <Button type="submit" className="bg-navy-blue text-white hover:bg-navy-blue/90">
-                {property ? 'Update Property' : 'Add Property'}
+            <Button type="submit" className="bg-navy-blue text-white hover:bg-navy-blue/90" disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : (property ? 'Update Property' : 'Add Property')}
             </Button>
         </div>
       </form>

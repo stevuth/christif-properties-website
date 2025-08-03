@@ -1,11 +1,11 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   projectId: "terra-abode",
   appId: "1:290593073743:web:3b78017059a45adab2183a",
-  storageBucket: "terra-abode.firebasestorage.app",
+  storageBucket: "terra-abode.appspot.com",
   apiKey: "AIzaSyC6dUoB2EV1YR-vC5tfjCHrMlRlowwmKcI",
   authDomain: "terra-abode.firebaseapp.com",
   messagingSenderId: "290593073743"
@@ -19,15 +19,7 @@ if (getApps().length === 0) {
   app = getApp();
 }
 
-// Initialize App Check - This is commented out until a valid reCAPTCHA key is available.
-// if (typeof window !== 'undefined') {
-//   initializeAppCheck(app, {
-//     provider: new ReCaptchaV3Provider('YOUR_RECAPTCHA_SITE_KEY'),
-//     isTokenAutoRefreshEnabled: true
-//   });
-// }
-
-
 const db = getFirestore(app);
+const storage = getStorage(app);
 
-export { app, db };
+export { app, db, storage };
