@@ -1,4 +1,4 @@
-import { Phone, Mail, MessageSquare } from 'lucide-react';
+import { Phone, Mail, MessageSquare, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import ContactForm from '@/components/core/ContactForm';
 
@@ -36,6 +36,14 @@ export default function ContactPage() {
                 to assist you during our business hours.
               </p>
               <div className="space-y-6">
+                <div className="flex items-center gap-4 text-lg">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-golden-sand/10 text-golden-sand">
+                    <MapPin className="h-6 w-6" />
+                  </div>
+                  <span>
+                    No 2 Ukwuru Close, Trans Ekulu Enugu, Enugu State, Nigeria
+                  </span>
+                </div>
                 <a
                   href="tel:+2348022262178"
                   className="flex items-center gap-4 text-lg transition-colors hover:text-golden-sand"

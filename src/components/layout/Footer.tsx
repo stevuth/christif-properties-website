@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, MapPin } from "lucide-react";
 
 const footerLinks = [
     { href: '/', label: 'Properties' },
@@ -37,7 +37,11 @@ export default function Footer() {
                     </div>
                      <div>
                         <h3 className="font-headline font-semibold">Contact Us</h3>
-                        <ul className="mt-4 space-y-2 text-gray-300">
+                        <ul className="mt-4 space-y-3 text-gray-300">
+                           <li className="flex items-start gap-2">
+                            <MapPin className="h-5 w-5 flex-shrink-0 mt-1" /> 
+                            <span>No 2 Ukwuru Close, Trans Ekulu Enugu, Enugu State, Nigeria</span>
+                           </li>
                            <li>contact@christifproperties.com</li>
                            <li>+234 802 226 2178</li>
                         </ul>
