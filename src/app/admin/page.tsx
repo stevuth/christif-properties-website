@@ -115,12 +115,10 @@ export default function AdminPage() {
         imageUrls = [...imageUrls, ...newImageUrls];
       }
 
-      const { images, amenities, ...restOfValues } = values;
-      const amenitiesArray = Array.isArray(amenities) ? amenities : (amenities as string).split(',').map(s => s.trim()).filter(Boolean);
+      const { images, ...restOfValues } = values;
       
       const propertyData = {
           ...restOfValues,
-          amenities: amenitiesArray,
           images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
       };
 
@@ -173,7 +171,7 @@ export default function AdminPage() {
           <DialogTrigger asChild>
             <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-3xl">
+          <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
             <DialogHeader>
               <DialogTitle className="font-headline text-2xl text-navy-blue">
                 {selectedProperty ? "Edit Property" : "Add New Property"}
@@ -182,11 +180,13 @@ export default function AdminPage() {
                   {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
               </DialogDescription>
             </DialogHeader>
-            <PropertyForm
-              onSubmit={handleFormSubmit}
-              property={selectedProperty}
-              isSubmitting={isSubmitting}
-            />
+            <div className="flex-grow overflow-hidden">
+              <PropertyForm
+                onSubmit={handleFormSubmit}
+                property={selectedProperty}
+                isSubmitting={isSubmitting}
+              />
+            </div>
           </DialogContent>
         </Dialog>
       </div>
@@ -207,3 +207,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
