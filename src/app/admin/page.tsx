@@ -89,9 +89,9 @@ export default function AdminPage() {
       let imageUrls: string[] = selectedProperty?.images || [];
       if (values.images && values.images.length > 0) {
         const formData = new FormData();
-        for (const image of Array.from(values.images)) {
-            formData.append('images', image as File);
-        }
+        Array.from(values.images).forEach(file => {
+          formData.append('images', file as File);
+        });
         const newImageUrls = await uploadImages(formData);
         imageUrls = [...imageUrls, ...newImageUrls];
       }
