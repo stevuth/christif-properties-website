@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
   projectId: "terra-abode",
@@ -10,7 +11,6 @@ const firebaseConfig = {
   messagingSenderId: "290593073743"
 };
 
-
 // Initialize Firebase
 let app;
 if (getApps().length === 0) {
@@ -18,6 +18,15 @@ if (getApps().length === 0) {
 } else {
   app = getApp();
 }
+
+// Initialize App Check
+if (typeof window !== 'undefined') {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider('6Ld-i_cpAAAAAPp_C_b_-6MuvL5dF2l1Dq8iF2R3'),
+    isTokenAutoRefreshEnabled: true
+  });
+}
+
 
 const db = getFirestore(app);
 
