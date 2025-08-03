@@ -87,11 +87,14 @@ export default function AdminPage() {
     setSubmitting(true);
     try {
       let imageUrls: string[] = selectedProperty?.images || [];
-      if (values.images && values.images.length > 0) {
+      
+      const imageFiles = values.images as FileList | null;
+      if (imageFiles && imageFiles.length > 0) {
         const formData = new FormData();
-        Array.from(values.images).forEach(file => {
-          formData.append('images', file as File);
+        Array.from(imageFiles).forEach(file => {
+          formData.append('images', file);
         });
+
         const newImageUrls = await uploadImages(formData);
         imageUrls = [...imageUrls, ...newImageUrls];
       }
@@ -102,7 +105,7 @@ export default function AdminPage() {
       const propertyData = {
           ...restOfValues,
           amenities: amenitiesArray,
-          images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
+          images: imageUrls.length > 0 ? imageUrls : (selectedProperty?.images || ['https://placehold.co/800x600.png']),
       };
 
       if (selectedProperty) {

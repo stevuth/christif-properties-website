@@ -16,10 +16,11 @@ export async function uploadImages(formData: FormData): Promise<string[]> {
     if (image.size === 0) continue;
     
     const arrayBuffer = await image.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
     const storageRef = ref(storage, `properties/${Date.now()}-${image.name}`);
     
-    await uploadBytes(storageRef, arrayBuffer, {
+    await uploadBytes(storageRef, buffer, {
       contentType: image.type,
     });
     
