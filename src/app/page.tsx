@@ -28,6 +28,9 @@ export default function Home() {
           <p className="mt-4 max-w-2xl text-lg md:text-xl">
             Premium Homes Across Enugu State
           </p>
+          <p className="mt-2 max-w-2xl text-lg md:text-xl">
+            Your trusted partner in finding the perfect verified rental property.
+          </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="#listings"
