@@ -49,7 +49,7 @@ const formSchema = z.object({
   description: z.string().min(20, 'Description must be at least 20 characters.'),
   amenities: z.string().transform(val => val.split(',').map(s => s.trim()).filter(Boolean)),
   images: z.any()
-    .refine((files) => files?.length <= 5, "You can add up to 5 images.")
+    .refine((files) => files?.length <= 4, "You can add up to 4 images.")
     .refine((files) => Array.from(files).every((file: any) => file instanceof File), "Expected a file list.")
     .refine((files) => Array.from(files).every((file: any) => file.size <= MAX_FILE_SIZE), `Max file size is 5MB.`)
     .refine(
@@ -147,7 +147,7 @@ export default function PropertyForm({ onSubmit, property, isSubmitting }: Prope
             name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Images (up to 5)</FormLabel>
+                <FormLabel>Images (up to 4)</FormLabel>
                 <FormControl>
                   <Input type="file" multiple accept="image/*" onChange={(e) => field.onChange(e.target.files)} />
                 </FormControl>
