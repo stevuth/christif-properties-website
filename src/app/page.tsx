@@ -1,13 +1,28 @@
 
+"use client"
 import PropertyListings from '@/components/properties/PropertyListings';
 import { getProperties } from '@/lib/properties';
 import Image from 'next/image';
 import Link from 'next/link';
-import PropertyCard from '@/components/properties/PropertyCard';
+import { useEffect, useState } from 'react';
+import type { Property } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
+
 
 export default function Home() {
-  const properties = getProperties();
-  const curatedProperties = properties.slice(0, 3);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProps = async () => {
+      setLoading(true);
+      const props = await getProperties();
+      setProperties(props);
+      setLoading(false);
+    };
+    fetchProps();
+  }, []);
+
 
   return (
     <div className="flex flex-col">
@@ -50,7 +65,19 @@ export default function Home() {
         </div>
       </section>
 
-      <PropertyListings properties={properties} />
+       {loading ? (
+        <section className="w-full bg-off-white py-16 md:py-24">
+            <div className="container mx-auto max-w-7xl px-4">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <Skeleton className="h-[450px] w-full" />
+                    <Skeleton className="h-[450px] w-full" />
+                    <Skeleton className="h-[450px] w-full" />
+                </div>
+            </div>
+        </section>
+        ) : (
+          <PropertyListings properties={properties} />
+        )}
     </div>
   );
 }

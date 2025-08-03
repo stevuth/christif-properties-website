@@ -2,7 +2,8 @@
 "use client";
 
 import * as React from "react";
-import { getProperties } from "@/lib/properties";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import type { Property } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,17 +12,43 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
 } from "@/components/ui/dialog";
 import PropertyTable from "@/components/admin/PropertyTable";
 import PropertyForm from "@/components/admin/PropertyForm";
 import { useToast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AdminPage() {
   const { toast } = useToast();
-  const [properties, setProperties] = React.useState<Property[]>(getProperties());
+  const [properties, setProperties] = React.useState<Property[]>([]);
+  const [loading, setLoading] = React.useState(true);
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedProperty, setSelectedProperty] = React.useState<Property | null>(null);
+
+  const fetchProperties = React.useCallback(async () => {
+    setLoading(true);
+    try {
+      const querySnapshot = await getDocs(collection(db, "properties"));
+      const props: Property[] = [];
+      querySnapshot.forEach((doc) => {
+        props.push({ id: doc.id, ...(doc.data() as Omit<Property, 'id'>) });
+      });
+      setProperties(props);
+    } catch (error) {
+      console.error("Error fetching properties: ", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch properties.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  React.useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
 
   const handleAddProperty = () => {
     setSelectedProperty(null);
@@ -33,49 +60,62 @@ export default function AdminPage() {
     setDialogOpen(true);
   };
 
-  const handleDeleteProperty = (propertyId: string) => {
-    // In a real app, this would be an API call.
-    // Here we just filter the state.
-    setProperties(properties.filter((p) => p.id !== propertyId));
-    toast({
-      title: "Property Deleted",
-      description: "The property has been removed from the list.",
-    });
+  const handleDeleteProperty = async (propertyId: string) => {
+    try {
+        await deleteDoc(doc(db, "properties", propertyId));
+        setProperties(properties.filter((p) => p.id !== propertyId));
+        toast({
+            title: "Property Deleted",
+            description: "The property has been removed.",
+        });
+    } catch (error) {
+        console.error("Error deleting property: ", error);
+        toast({
+            title: "Error",
+            description: "Failed to delete property.",
+            variant: "destructive",
+        });
+    }
   };
 
-  const handleFormSubmit = (values: Omit<Property, 'id' | 'agent' | 'listingStatus' | 'images'>) => {
-    if (selectedProperty) {
-      // Update existing property
-      const updatedProperties = properties.map((p) =>
-        p.id === selectedProperty.id ? { ...p, ...values } : p
-      );
-      setProperties(updatedProperties);
-      toast({
-        title: "Property Updated",
-        description: "The property details have been successfully updated.",
-      });
-    } else {
-      // Add new property
-      const newProperty: Property = {
-        ...values,
-        id: (properties.length + 1).toString(),
-        images: ['https://placehold.co/800x600.png'],
-        listingStatus: 'For Rent',
-        agent: { // Default agent info
-          name: 'Mr. David Okoro',
-          agency: 'Christif Properties',
-          phone: '+2348022262178',
-          email: 'david.okoro@christifproperties.com',
-          avatar: 'https://picsum.photos/seed/agent1/100/100',
-        }
-      };
-      setProperties([...properties, newProperty]);
+  const handleFormSubmit = async (values: Omit<Property, 'id' | 'agent' | 'listingStatus' | 'images'>) => {
+    try {
+      if (selectedProperty) {
+        const propDoc = doc(db, "properties", selectedProperty.id);
+        await updateDoc(propDoc, values);
+        toast({
+          title: "Property Updated",
+          description: "The property details have been successfully updated.",
+        });
+      } else {
+        const newPropertyData = {
+          ...values,
+          images: ['https://placehold.co/800x600.png'],
+          listingStatus: 'For Rent',
+          agent: {
+            name: 'Mr. David Okoro',
+            agency: 'Christif Properties',
+            phone: '+2348022262178',
+            email: 'david.okoro@christifproperties.com',
+            avatar: 'https://picsum.photos/seed/agent1/100/100',
+          }
+        };
+        await addDoc(collection(db, "properties"), newPropertyData);
+        toast({
+          title: "Property Added",
+          description: "The new property has been added to the list.",
+        });
+      }
+      fetchProperties(); // Re-fetch properties to show the updated list
+      setDialogOpen(false);
+    } catch (error) {
+       console.error("Error submitting form: ", error);
        toast({
-        title: "Property Added",
-        description: "The new property has been added to the list.",
-      });
+         title: "Error",
+         description: "An error occurred while saving the property.",
+         variant: "destructive",
+       });
     }
-    setDialogOpen(false);
   };
 
   return (
@@ -102,11 +142,19 @@ export default function AdminPage() {
         </Dialog>
       </div>
 
-      <PropertyTable
-        properties={properties}
-        onEdit={handleEditProperty}
-        onDelete={handleDeleteProperty}
-      />
+      {loading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+        </div>
+      ) : (
+        <PropertyTable
+          properties={properties}
+          onEdit={handleEditProperty}
+          onDelete={handleDeleteProperty}
+        />
+      )}
     </div>
   );
 }

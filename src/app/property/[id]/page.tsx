@@ -1,3 +1,6 @@
+
+"use client";
+
 import { getPropertyById } from '@/lib/properties';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -5,6 +8,10 @@ import { BedDouble, Bath, Car, SquareGanttChart, Building, CheckCircle, User, Ma
 import PropertyGallery from '@/components/properties/PropertyGallery';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import type { Property } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
+
 
 type PropertyPageProps = {
   params: {
@@ -14,10 +21,48 @@ type PropertyPageProps = {
 
 export default function PropertyPage({ params }: PropertyPageProps) {
   const propertyId = String(params.id);
-  const property = getPropertyById(propertyId);
+  const [property, setProperty] = useState<Property | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+      const fetchProperty = async () => {
+          setLoading(true);
+          const prop = await getPropertyById(propertyId);
+          if (prop) {
+              setProperty(prop);
+          } else {
+              notFound();
+          }
+          setLoading(false);
+      };
+      if (propertyId) {
+          fetchProperty();
+      }
+  }, [propertyId]);
+
+  if (loading) {
+    return (
+        <div className="bg-background py-12 md:py-16">
+            <div className="container mx-auto max-w-7xl px-4">
+                <Skeleton className="h-12 w-3/4 mb-4" />
+                <Skeleton className="h-8 w-1/2 mb-8" />
+                <Skeleton className="aspect-video w-full mb-12" />
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+                    <div className="lg:col-span-2 space-y-8">
+                        <Skeleton className="h-48 w-full" />
+                        <Skeleton className="h-32 w-full" />
+                    </div>
+                    <div className="lg:col-span-1">
+                        <Skeleton className="h-64 w-full" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+  }
 
   if (!property) {
-    notFound();
+    return notFound();
   }
 
   const features = [

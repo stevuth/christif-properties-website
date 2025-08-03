@@ -1,221 +1,34 @@
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 import type { Property } from './types';
 
-const properties: Property[] = [
-  {
-    id: '1',
-    title: 'Luxury 4-Bedroom Duplex',
-    price: 3500000,
-    location: {
-        address: '15, Okpara Avenue',
-        area: 'GRA',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 4,
-        bathrooms: 4,
-        toilets: 5,
-        parking: 3,
-        sizeSqm: 500,
-        yearBuilt: 2022,
-    },
-    type: 'Duplex',
-    listingStatus: 'For Rent',
-    description: 'A newly built, exquisitely finished 4-bedroom duplex in the highbrow area of GRA, Enugu. This property boasts of modern facilities, ample parking space, and a serene environment perfect for a family.',
-    images: [
-      'https://picsum.photos/seed/prop1_1/800/600',
-      'https://picsum.photos/seed/prop1_2/800/600',
-      'https://picsum.photos/seed/prop1_3/800/600',
-      'https://picsum.photos/seed/prop1_4/800/600',
-    ],
-    amenities: ['POP Ceiling', 'Air Conditioning', 'Borehole Water', '24/7 Security', 'Fitted Kitchen', 'Walk-in Wardrobes'],
-    agent: {
-      name: 'Mr. David Okoro',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'david.okoro@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent1/100/100',
-    },
-  },
-  {
-    id: '2',
-    title: 'Modern 3-Bedroom Bungalow',
-    price: 2200000,
-    location: {
-        address: '8, Zik Avenue',
-        area: 'Uwani',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 3,
-        bathrooms: 3,
-        toilets: 4,
-        parking: 2,
-        sizeSqm: 450,
-        yearBuilt: 2021,
-    },
-    type: 'Bungalow',
-    listingStatus: 'For Rent',
-    description: 'A clean and well-maintained 3-bedroom bungalow located in a secure estate. This home offers a spacious living room, all rooms en-suite, and a fitted kitchen. Ideal for those seeking comfort and tranquility.',
-    images: [
-      'https://picsum.photos/seed/prop2_1/800/600',
-      'https://picsum.photos/seed/prop2_2/800/600',
-      'https://picsum.photos/seed/prop2_3/800/600',
-    ],
-    amenities: ['POP Ceiling', 'Borehole Water', 'Gated Estate', 'Fitted Kitchen'],
-    agent: {
-      name: 'Mrs. Chioma Nwosu',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent2/100/100',
-    },
-  },
-   {
-    id: '3',
-    title: 'Spacious 5-Bedroom Detached House',
-    price: 5000000,
-    location: {
-        address: '10, Independence Layout',
-        area: 'Independence Layout',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 5,
-        bathrooms: 5,
-        toilets: 6,
-        parking: 4,
-        sizeSqm: 700,
-        yearBuilt: 2020,
-    },
-    type: 'Detached House',
-    listingStatus: 'For Rent',
-    description: 'An architectural masterpiece, this 5-bedroom detached house comes with a BQ, swimming pool, and a large compound. It is perfect for expatriates, executives, and families who value luxury and space.',
-    images: [
-      'https://picsum.photos/seed/prop3_1/800/600',
-      'https://picsum.photos/seed/prop3_2/800/600',
-      'https://picsum.photos/seed/prop3_3/800/600',
-      'https://picsum.photos/seed/prop3_4/800/600',
-    ],
-    amenities: ['Swimming Pool', 'Boys Quarters', 'POP Ceiling', 'Air Conditioning', '24/7 Security', 'Fitted Kitchen'],
-    agent: {
-      name: 'Mr. David Okoro',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'david.okoro@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent1/100/100',
-    },
-  },
-  {
-    id: '4',
-    title: 'Cozy 2-Bedroom Apartment',
-    price: 1500000,
-    location: {
-        address: '25, Abakpa Nike Road',
-        area: 'Abakpa Nike',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 2,
-        bathrooms: 2,
-        toilets: 3,
-        parking: 1,
-        sizeSqm: 300,
-        yearBuilt: 2019,
-    },
-    type: 'Apartment',
-    listingStatus: 'For Rent',
-    description: 'A neat and modern 2-bedroom flat in a block of apartments. Located in a lively neighborhood with good road access. The property is well-maintained and offers good value for money.',
-    images: [
-      'https://picsum.photos/seed/prop4_1/800/600',
-      'https://picsum.photos/seed/prop4_2/800/600',
-    ],
-    amenities: ['Tiled Floors', 'Wardrobes', 'Kitchen Cabinets', 'Borehole Water'],
-    agent: {
-      name: 'Mrs. Chioma Nwosu',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent2/100/100',
-    },
-  },
-  {
-    id: '5',
-    title: 'Commercial Office Space',
-    price: 2800000,
-    location: {
-        address: '50, Ogui Road',
-        area: 'Ogui',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 0,
-        bathrooms: 2,
-        toilets: 2,
-        parking: 5,
-        sizeSqm: 150,
-        yearBuilt: 2018,
-    },
-    type: 'Commercial',
-    listingStatus: 'For Rent',
-    description: 'An open-plan office space on a major road, suitable for a bank, showroom, or corporate office. The property has high visibility and ample parking space for staff and customers.',
-    images: [
-      'https://picsum.photos/seed/prop5_1/800/600',
-      'https://picsum.photos/seed/prop5_2/800/600',
-    ],
-    amenities: ['Ample Parking', 'High Visibility', 'Generator House', 'Security Post'],
-    agent: {
-      name: 'Mr. David Okoro',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'david.okoro@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent1/100/100',
-    },
-  },
-   {
-    id: '6',
-    title: 'Serviced 1-Bedroom Mini-Flat',
-    price: 950000,
-    location: {
-        address: '18, Thinkers Corner',
-        area: 'Thinkers Corner',
-        city: 'Enugu',
-        state: 'Enugu State',
-    },
-    features: {
-        bedrooms: 1,
-        bathrooms: 1,
-        toilets: 1,
-        parking: 1,
-        sizeSqm: 100,
-        yearBuilt: 2023,
-    },
-    type: 'Apartment',
-    listingStatus: 'For Rent',
-    description: 'A modern, serviced one-bedroom apartment perfect for a young professional or couple. Comes with a generator, water treatment plant, and cleaning services. Pay and move in.',
-    images: [
-      'https://picsum.photos/seed/prop6_1/800/600',
-      'https://picsum.photos/seed/prop6_2/800/600',
-    ],
-    amenities: ['Generator', 'Water Treatment', 'Cleaning Service', '24/7 Security'],
-    agent: {
-      name: 'Mrs. Chioma Nwosu',
-      agency: 'Christif Properties',
-      phone: '+234 802 226 2178',
-      email: 'chioma.nwosu@christifproperties.com',
-      avatar: 'https://picsum.photos/seed/agent2/100/100',
-    },
-  },
-];
-
-export function getProperties(): Property[] {
-  return properties;
+export async function getProperties(): Promise<Property[]> {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'properties'));
+    const properties: Property[] = [];
+    querySnapshot.forEach((doc) => {
+      properties.push({ id: doc.id, ...(doc.data() as Omit<Property, 'id'>) });
+    });
+    return properties;
+  } catch (error) {
+    console.error("Error fetching properties: ", error);
+    return [];
+  }
 }
 
-export function getPropertyById(id: string): Property | undefined {
-  return properties.find((p) => p.id === id);
+export async function getPropertyById(id: string): Promise<Property | undefined> {
+  try {
+    const docRef = doc(db, 'properties', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...(docSnap.data() as Omit<Property, 'id'>) };
+    } else {
+      console.log("No such document!");
+      return undefined;
+    }
+  } catch (error) {
+    console.error("Error fetching property by ID: ", error);
+    return undefined;
+  }
 }
