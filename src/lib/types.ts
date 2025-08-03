@@ -1,22 +1,31 @@
 export type Property = {
-  id: number;
+  id: string;
   title: string;
   price: number;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  beds: number;
-  baths: number;
-  sqft: number;
+  location: {
+    address: string;
+    area: string;
+    city: string;
+    state: string;
+  };
+  features: {
+    bedrooms: number;
+    bathrooms: number;
+    toilets: number;
+    parking: number;
+    sizeSqm: number;
+    yearBuilt?: number;
+  };
+  type: 'Duplex' | 'Bungalow' | 'Apartment' | 'Detached House' | 'Commercial';
+  listingStatus: 'For Rent';
   description: string;
-  type: 'House' | 'Apartment' | 'Condo' | 'Townhouse';
   images: string[];
   amenities: string[];
   agent: {
     name: string;
-    email: string;
+    agency: string;
     phone: string;
+    email: string;
     avatar: string;
   };
 };

@@ -3,9 +3,7 @@
 import type { Property } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BedDouble, Bath, SquareGanttChart } from 'lucide-react';
-import FavoritesButton from './FavoritesButton';
+import { BedDouble, Bath, SquareGanttChart, Car, Armchair } from 'lucide-react';
 
 type PropertyCardProps = {
   property: Property;
@@ -14,46 +12,41 @@ type PropertyCardProps = {
 export default function PropertyCard({ property }: PropertyCardProps) {
   return (
     <Link href={`/property/${property.id}`} className="group block">
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/50">
-        <CardHeader className="relative p-0">
-          <div className="aspect-video overflow-hidden">
-            <Image
-              src={property.images[0]}
-              alt={property.title}
-              width={400}
-              height={300}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              data-ai-hint="house exterior"
-            />
-          </div>
-          <FavoritesButton propertyId={property.id} />
-        </CardHeader>
-        <CardContent className="p-4">
-          <CardTitle className="mb-2 font-headline text-2xl">
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 0,
-            }).format(property.price)}
-          </CardTitle>
-          <h3 className="text-lg font-semibold text-foreground truncate">{property.title}</h3>
-          <p className="text-muted-foreground truncate">{property.address}, {property.city}, {property.state}</p>
-          <div className="mt-4 flex items-center justify-start gap-4 border-t pt-4 text-muted-foreground">
+      <div className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
+        <div className="relative aspect-video overflow-hidden">
+          <Image
+            src={property.images[0]}
+            alt={property.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            data-ai-hint="house exterior"
+          />
+        </div>
+        <div className="p-4">
+          <h3 className="truncate font-headline text-xl font-bold text-navy-blue">
+            {property.title}
+          </h3>
+          <p className="truncate text-warm-gray">{property.location.area}, {property.location.city}</p>
+          <p className="mt-2 font-headline text-2xl font-bold text-golden-sand">
+            ₦{property.price.toLocaleString()}<span className="text-base font-normal text-warm-gray">/year</span>
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-gray-100 pt-3 text-warm-gray">
             <div className="flex items-center gap-2">
-              <BedDouble className="h-5 w-5 text-secondary" />
-              <span>{property.beds} Beds</span>
+              <BedDouble className="h-5 w-5 text-navy-blue/70" />
+              <span>{property.features.bedrooms} Beds</span>
             </div>
             <div className="flex items-center gap-2">
-              <Bath className="h-5 w-5 text-secondary" />
-              <span>{property.baths} Baths</span>
+              <Bath className="h-5 w-5 text-navy-blue/70" />
+              <span>{property.features.bathrooms} Baths</span>
             </div>
-            <div className="flex items-center gap-2">
-              <SquareGanttChart className="h-5 w-5 text-secondary" />
-              <span>{property.sqft} sqft</span>
+             <div className="flex items-center gap-2">
+              <Armchair className="h-5 w-5 text-navy-blue/70" />
+              <span>{property.features.toilets} Toilets</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }

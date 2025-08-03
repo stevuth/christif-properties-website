@@ -1,19 +1,28 @@
-import type { Metadata } from "next";
-import { Alegreya } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from 'next';
+import { Poppins, Inter } from 'next/font/google';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { Toaster } from '@/components/ui/toaster';
+import WhatsAppButton from '@/components/core/WhatsAppButton';
 
-const alegreya = Alegreya({
-  subsets: ["latin"],
-  variable: "--font-alegreya",
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-poppins',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Terra Abode",
-  description: "Find your next home with Terra Abode. Browse listings, save favorites, and connect with agents.",
+  title: 'Christif Properties | Premium Homes in Enugu State',
+  description:
+    'Find verified properties for rent in Enugu, Nigeria. Browse apartments, houses, and commercial spaces with Christif Properties. Your trusted real estate partner.',
+  keywords: 'real estate enugu, property for rent enugu, houses in enugu, christif properties, nigerian real estate',
 };
 
 export default function RootLayout({
@@ -23,21 +32,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-body antialiased",
-          alegreya.variable
+          'min-h-screen bg-background font-body text-charcoal-black antialiased',
+          poppins.variable,
+          inter.variable
         )}
       >
         <div className="relative flex min-h-dvh flex-col bg-background">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <WhatsAppButton />
         </div>
         <Toaster />
       </body>

@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
 
 type PropertyGalleryProps = {
   images: string[];
@@ -21,7 +20,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
       <CarouselContent>
         {images.map((src, index) => (
           <CarouselItem key={index}>
-            <Card className="overflow-hidden">
+            <div className="overflow-hidden rounded-lg">
                 <div className="aspect-video relative">
                     <Image
                         src={src}
@@ -29,15 +28,16 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
                         fill
                         className="object-cover"
                         data-ai-hint="house interior"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                        priority={index === 0}
                     />
                 </div>
-            </Card>
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="ml-16" />
-      <CarouselNext className="mr-16" />
+      <CarouselPrevious className="ml-16 hidden sm:flex" />
+      <CarouselNext className="mr-16 hidden sm:flex" />
     </Carousel>
   );
 }
