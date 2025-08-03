@@ -28,12 +28,20 @@ export default function Home() {
           <p className="mt-4 max-w-2xl text-lg md:text-xl">
             Premium Homes Across Enugu State
           </p>
-          <Link
-            href="#listings"
-            className="mt-8 rounded-md bg-golden-sand px-8 py-3 font-headline text-lg font-semibold text-navy-blue transition-transform hover:scale-105"
-          >
-            Explore Properties
-          </Link>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              href="#listings"
+              className="rounded-md bg-golden-sand px-8 py-3 font-headline text-lg font-semibold text-navy-blue transition-transform hover:scale-105"
+            >
+              Explore Properties
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-md border-2 border-white bg-transparent px-8 py-3 font-headline text-lg font-semibold text-white transition-colors hover:bg-white hover:text-navy-blue"
+            >
+              List Your Property
+            </Link>
+          </div>
         </div>
       </section>
 
