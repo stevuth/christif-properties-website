@@ -20,8 +20,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 
-const CLOUDINARY_CLOUD_NAME = "dni2duulw";
-const CLOUDINARY_UPLOAD_PRESET = "stevuth";
+const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
 export default function AdminPage() {
   const { toast } = useToast();
@@ -207,5 +207,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
