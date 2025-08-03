@@ -109,7 +109,7 @@ export default function AdminPage() {
       
       const imageFiles = values.images as FileList | null;
       if (imageFiles && imageFiles.length > 0) {
-        toast({ title: "Uploading images...", description: "Please wait while we upload the new images." });
+        toast({ title: `Uploading ${imageFiles.length} image(s)...`, description: "Please wait." });
         const uploadPromises = Array.from(imageFiles).map(uploadToCloudinary);
         const newImageUrls = await Promise.all(uploadPromises);
         imageUrls = [...imageUrls, ...newImageUrls];

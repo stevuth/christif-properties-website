@@ -49,11 +49,11 @@ const formSchema = z.object({
   description: z.string().min(20, 'Description must be at least 20 characters.'),
   amenities: z.string().transform(val => val.split(',').map(s => s.trim()).filter(Boolean)),
   images: z.any()
-    .refine((files) => files?.length <= 4, "You can add up to 4 images.")
-    .refine((files) => Array.from(files).every((file: any) => file instanceof File), "Expected a file list.")
-    .refine((files) => Array.from(files).every((file: any) => file.size <= MAX_FILE_SIZE), `Max file size is 5MB.`)
+    .refine((files) => !files || files.length <= 4, "You can add up to 4 images.")
+    .refine((files) => !files || Array.from(files).every((file: any) => file instanceof File), "Expected a file list.")
+    .refine((files) => !files || Array.from(files).every((file: any) => file.size <= MAX_FILE_SIZE), `Max file size is 5MB.`)
     .refine(
-      (files) => Array.from(files).every((file: any) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
+      (files) => !files || Array.from(files).every((file: any) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
       ".jpg, .jpeg, .png and .webp files are accepted."
     ).optional(),
 });
