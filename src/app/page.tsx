@@ -36,20 +36,20 @@ export default function Home() {
           priority
         />
         <div className="absolute inset-0 bg-navy-blue/60" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-          <h1 className="font-headline text-5xl font-bold md:text-7xl">
+        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4">
+          <h1 className="font-headline text-4xl font-bold md:text-7xl">
             Christif Properties
           </h1>
-          <p className="mt-4 max-w-2xl text-lg md:text-xl">
+          <p className="mt-4 max-w-2xl text-base md:text-xl">
             Premium Homes Across Enugu State
           </p>
-          <p className="mt-2 max-w-2xl text-lg md:text-xl">
+          <p className="mt-2 max-w-2xl text-base md:text-xl">
             Your trusted partner in finding the perfect verified rental property.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="#listings"
-              className="rounded-md bg-golden-sand px-8 py-3 font-headline text-lg font-semibold text-navy-blue transition-transform hover:scale-105"
+              className="rounded-md bg-golden-sand px-6 py-3 font-headline text-base font-semibold text-navy-blue transition-transform hover:scale-105 md:px-8 md:text-lg"
             >
               Explore Properties
             </Link>
@@ -57,7 +57,7 @@ export default function Home() {
               href="https://wa.me/2348022262178"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md border-2 border-white bg-transparent px-8 py-3 font-headline text-lg font-semibold text-white transition-colors hover:bg-white hover:text-navy-blue"
+              className="rounded-md border-2 border-white bg-transparent px-6 py-3 font-headline text-base font-semibold text-white transition-colors hover:bg-white hover:text-navy-blue md:px-8 md:text-lg"
             >
               List Your Property
             </Link>

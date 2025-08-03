@@ -82,7 +82,7 @@ export default function PropertyForm({ onSubmit, property }: PropertyFormProps) 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <ScrollArea className="h-[70vh] pr-6">
+        <ScrollArea className="h-[60vh] md:h-[70vh] pr-6">
         <div className="space-y-6">
           <FormField
             control={form.control}

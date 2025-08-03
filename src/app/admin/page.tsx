@@ -120,13 +120,13 @@ export default function AdminPage() {
 
   return (
     <div className="container mx-auto py-12 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="font-headline text-4xl font-bold text-navy-blue">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <h1 className="font-headline text-3xl md:text-4xl font-bold text-navy-blue">
           Manage Properties
         </h1>
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90">Add New Property</Button>
+            <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
           </DialogTrigger>
           <DialogContent className="max-w-3xl">
             <DialogHeader>

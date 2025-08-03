@@ -79,8 +79,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       <div className="container mx-auto max-w-7xl px-4">
         
         <div className="mb-8">
-            <h1 className="font-headline text-4xl font-bold text-navy-blue md:text-5xl">{property.title}</h1>
-            <p className="mt-2 text-lg text-warm-gray">{property.location.area}, {property.location.city}, {property.location.state}</p>
+            <h1 className="font-headline text-3xl font-bold text-navy-blue md:text-5xl">{property.title}</h1>
+            <p className="mt-2 text-base text-warm-gray md:text-lg">{property.location.area}, {property.location.city}, {property.location.state}</p>
         </div>
 
         <PropertyGallery images={property.images} title={property.title} />
@@ -89,19 +89,19 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           <div className="lg:col-span-2">
             <div className="space-y-8">
               <div>
-                <h2 className="font-headline text-3xl font-semibold text-navy-blue">Property Description</h2>
-                <p className="mt-4 text-lg leading-relaxed text-warm-gray">{property.description}</p>
+                <h2 className="font-headline text-2xl font-semibold text-navy-blue md:text-3xl">Property Description</h2>
+                <p className="mt-4 text-base leading-relaxed text-warm-gray md:text-lg">{property.description}</p>
               </div>
               
               <div className="mt-8">
-                 <h2 className="font-headline text-3xl font-semibold text-navy-blue">Property Features</h2>
-                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-6 md:grid-cols-3">
+                 <h2 className="font-headline text-2xl font-semibold text-navy-blue md:text-3xl">Property Features</h2>
+                 <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3">
                    {features.map((feature, index) => (
                       <div key={index} className="flex items-center gap-3">
-                         <feature.icon className="h-7 w-7 text-golden-sand" />
+                         <feature.icon className="h-6 w-6 text-golden-sand md:h-7 md:w-7" />
                          <div>
-                            <p className="font-semibold text-charcoal-black">{feature.label}</p>
-                            <p className="text-warm-gray">{feature.value}</p>
+                            <p className="font-semibold text-charcoal-black text-sm md:text-base">{feature.label}</p>
+                            <p className="text-warm-gray text-sm md:text-base">{feature.value}</p>
                          </div>
                       </div>
                    ))}
@@ -109,11 +109,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               </div>
 
               <div className="mt-8">
-                <h2 className="font-headline text-3xl font-semibold text-navy-blue">Amenities</h2>
-                <ul className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+                <h2 className="font-headline text-2xl font-semibold text-navy-blue md:text-3xl">Amenities</h2>
+                <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                   {property.amenities.map((amenity, index) => (
-                    <li key={index} className="flex items-center gap-3 text-lg text-warm-gray">
-                      <CheckCircle className="h-6 w-6 text-golden-sand" />
+                    <li key={index} className="flex items-center gap-3 text-base text-warm-gray md:text-lg">
+                      <CheckCircle className="h-5 w-5 text-golden-sand md:h-6 md:w-6" />
                       <span>{amenity}</span>
                     </li>
                   ))}
@@ -124,18 +124,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           
           <div className="lg:col-span-1">
             <div className="sticky top-24 rounded-lg bg-off-white p-6">
-                <p className="font-headline text-4xl font-bold text-navy-blue">₦{property.price.toLocaleString()}<span className="text-lg font-normal text-warm-gray">/year</span></p>
+                <p className="font-headline text-3xl font-bold text-navy-blue md:text-4xl">₦{property.price.toLocaleString()}<span className="text-base font-normal text-warm-gray md:text-lg">/year</span></p>
                 <div className="mt-6 space-y-4">
                     <Button asChild className="w-full bg-golden-sand text-navy-blue hover:bg-golden-sand/90 h-12 text-lg font-semibold">
                        <Link href="/contact">Schedule Inspection</Link>
                     </Button>
                 </div>
                 <div id="contact-agent" className="mt-8">
-                   <h3 className="font-headline text-2xl font-semibold text-navy-blue mb-4">Contact Agent</h3>
+                   <h3 className="font-headline text-xl font-semibold text-navy-blue mb-4 md:text-2xl">Contact Agent</h3>
                    <div className="flex items-center gap-4">
                         <Image src={property.agent.avatar} alt={property.agent.name} width={60} height={60} className="rounded-full" data-ai-hint="person portrait" />
                         <div>
-                            <h4 className="font-bold text-lg text-navy-blue">{property.agent.name}</h4>
+                            <h4 className="font-bold text-base text-navy-blue md:text-lg">{property.agent.name}</h4>
                             <p className="text-sm text-warm-gray">{property.agent.agency}</p>
                         </div>
                     </div>
