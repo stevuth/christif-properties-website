@@ -32,7 +32,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mr. David Okoro',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5678',
+      phone: '+234 802 226 2178',
       email: 'david.okoro@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent1/100/100',
     },
@@ -67,7 +67,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mrs. Chioma Nwosu',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5679',
+      phone: '+234 802 226 2178',
       email: 'chioma.nwosu@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent2/100/100',
     },
@@ -103,7 +103,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mr. David Okoro',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5678',
+      phone: '+234 802 226 2178',
       email: 'david.okoro@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent1/100/100',
     },
@@ -137,7 +137,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mrs. Chioma Nwosu',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5679',
+      phone: '+234 802 226 2178',
       email: 'chioma.nwosu@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent2/100/100',
     },
@@ -171,7 +171,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mr. David Okoro',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5678',
+      phone: '+234 802 226 2178',
       email: 'david.okoro@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent1/100/100',
     },
@@ -205,7 +205,7 @@ const properties: Property[] = [
     agent: {
       name: 'Mrs. Chioma Nwosu',
       agency: 'Christif Properties',
-      phone: '+234 801 234 5679',
+      phone: '+234 802 226 2178',
       email: 'chioma.nwosu@christifproperties.com',
       avatar: 'https://picsum.photos/seed/agent2/100/100',
     },

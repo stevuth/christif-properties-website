@@ -37,16 +37,16 @@ export default function ContactPage() {
               </p>
               <div className="space-y-6">
                 <a
-                  href="tel:+2348012345678"
+                  href="tel:+2348022262178"
                   className="flex items-center gap-4 text-lg transition-colors hover:text-golden-sand"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-golden-sand/10 text-golden-sand">
                     <Phone className="h-6 w-6" />
                   </div>
-                  <span>+234 801 234 5678</span>
+                  <span>+234 802 226 2178</span>
                 </a>
                 <a
-                  href="https://wa.me/2348012345678"
+                  href="https://wa.me/2348022262178"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-lg transition-colors hover:text-golden-sand"

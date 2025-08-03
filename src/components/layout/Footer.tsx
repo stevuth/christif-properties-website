@@ -39,12 +39,12 @@ export default function Footer() {
                         <h3 className="font-headline font-semibold">Contact Us</h3>
                         <ul className="mt-4 space-y-2 text-gray-300">
                            <li>contact@christifproperties.com</li>
-                           <li>+234 801 234 5678</li>
+                           <li>+234 802 226 2178</li>
                         </ul>
                      </div>
                       <div>
                         <h3 className="font-headline font-semibold">Connect</h3>
-                        <a href="https://wa.me/2348012345678" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-gray-300 hover:text-golden-sand transition-colors">
+                        <a href="https://wa.me/2348022262178" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-gray-300 hover:text-golden-sand transition-colors">
                             <MessageSquare className="h-5 w-5"/>
                             WhatsApp
                         </a>

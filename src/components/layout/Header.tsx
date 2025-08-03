@@ -43,7 +43,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href="tel:+2348012345678" className="hidden sm:inline-flex">
+          <a href="tel:+2348022262178" className="hidden sm:inline-flex">
             <Button variant="outline" className="border-golden-sand text-golden-sand hover:bg-golden-sand/10 hover:text-golden-sand">
                 <Phone className="mr-2 h-4 w-4" />
                 Call Us
