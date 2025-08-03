@@ -13,7 +13,7 @@ export default function Home() {
     <div className="flex flex-col">
       <section className="relative h-[70vh] w-full md:h-[80vh]">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="https://picsum.photos/seed/hero/1920/1080"
           alt="Luxury home in Enugu"
           data-ai-hint="luxury nigerian home"
           fill
@@ -67,7 +67,7 @@ export default function Home() {
             </div>
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-1">
                  <Link href="/#listings" className="group relative block h-64 overflow-hidden rounded-lg">
-                     <Image src="https://placehold.co/1200x400.png" alt="Properties for rent" fill className="object-cover transition-transform duration-500 group-hover:scale-110" data-ai-hint="apartment building exterior" />
+                     <Image src="https://picsum.photos/seed/rent/1200/400" alt="Properties for rent" fill className="object-cover transition-transform duration-500 group-hover:scale-110" data-ai-hint="apartment building exterior" />
                      <div className="absolute inset-0 bg-black/50"></div>
                      <div className="relative flex h-full items-center justify-center">
                          <h3 className="font-headline text-4xl font-bold text-white">For Rent</h3>
