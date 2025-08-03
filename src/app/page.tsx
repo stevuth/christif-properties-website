@@ -36,7 +36,9 @@ export default function Home() {
               Explore Properties
             </Link>
             <Link
-              href="/contact"
+              href="https://wa.me/2348022262178"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-md border-2 border-white bg-transparent px-8 py-3 font-headline text-lg font-semibold text-white transition-colors hover:bg-white hover:text-navy-blue"
             >
               List Your Property
