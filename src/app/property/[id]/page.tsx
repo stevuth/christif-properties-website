@@ -4,7 +4,7 @@
 import { getPropertyById } from '@/lib/properties';
 import { notFound, useParams } from 'next/navigation';
 import Image from 'next/image';
-import { BedDouble, Bath, Car, SquareGanttChart, Building, CheckCircle, User, Mail, Phone, Calendar, Armchair } from 'lucide-react';
+import { BedDouble, Bath, Car, SquareGanttChart, Building, CheckCircle, User, Mail, Phone, Calendar, Armchair, MessageSquare } from 'lucide-react';
 import PropertyGallery from '@/components/properties/PropertyGallery';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -70,6 +70,8 @@ export default function PropertyPage({}: PropertyPageProps) {
     { icon: SquareGanttChart, label: 'Size', value: `${property.features.sizeSqm} sqm` },
     { icon: Building, label: 'Type', value: property.type },
   ];
+  
+  const whatsappNumber = property.agent.phone.replace(/\+/g, '');
 
   return (
     <div className="bg-background py-12 md:py-16">
@@ -122,9 +124,15 @@ export default function PropertyPage({}: PropertyPageProps) {
           <div className="lg:col-span-1">
             <div className="sticky top-24 rounded-lg bg-off-white p-6">
                 <p className="font-headline text-3xl font-bold text-navy-blue md:text-4xl">₦{property.price.toLocaleString()}<span className="text-base font-normal text-warm-gray md:text-lg">/year</span></p>
-                <div className="mt-6 space-y-4">
-                    <Button asChild className="w-full bg-golden-sand text-navy-blue hover:bg-golden-sand/90 h-12 text-lg font-semibold">
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Button asChild className="w-full bg-navy-blue text-white hover:bg-navy-blue/90 h-12 text-base font-semibold">
                        <Link href="/contact">Schedule Inspection</Link>
+                    </Button>
+                     <Button asChild className="w-full bg-green-600 text-white hover:bg-green-700 h-12 text-base font-semibold">
+                       <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                          <MessageSquare className="mr-2" />
+                          Contact Seller
+                       </a>
                     </Button>
                 </div>
                 <div id="contact-agent" className="mt-8">
