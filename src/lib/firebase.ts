@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+// import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
   projectId: "terra-abode",
@@ -19,13 +19,13 @@ if (getApps().length === 0) {
   app = getApp();
 }
 
-// Initialize App Check
-if (typeof window !== 'undefined') {
-  initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider('6Ld-i_cpAAAAAPp_C_b_-6MuvL5dF2l1Dq8iF2R3'),
-    isTokenAutoRefreshEnabled: true
-  });
-}
+// Initialize App Check - This is commented out until a valid reCAPTCHA key is available.
+// if (typeof window !== 'undefined') {
+//   initializeAppCheck(app, {
+//     provider: new ReCaptchaV3Provider('YOUR_RECAPTCHA_SITE_KEY'),
+//     isTokenAutoRefreshEnabled: true
+//   });
+// }
 
 
 const db = getFirestore(app);
