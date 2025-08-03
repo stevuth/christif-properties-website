@@ -19,8 +19,9 @@ import PropertyForm from "@/components/admin/PropertyForm";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
-import { uploadImages } from "@/app/admin/actions";
 
+const CLOUDINARY_CLOUD_NAME = "dni2duulw";
+const CLOUDINARY_UPLOAD_PRESET = "stevuth";
 
 export default function AdminPage() {
   const { toast } = useToast();
@@ -82,6 +83,24 @@ export default function AdminPage() {
         });
     }
   };
+
+  const uploadToCloudinary = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload image to Cloudinary.');
+    }
+
+    const data = await response.json();
+    return data.secure_url;
+  };
   
   const handleFormSubmit = async (values: PropertyFormValues) => {
     setSubmitting(true);
@@ -90,7 +109,9 @@ export default function AdminPage() {
       
       const imageFiles = values.images as FileList | null;
       if (imageFiles && imageFiles.length > 0) {
-        const newImageUrls = await uploadImages(imageFiles);
+        toast({ title: "Uploading images...", description: "Please wait while we upload the new images." });
+        const uploadPromises = Array.from(imageFiles).map(uploadToCloudinary);
+        const newImageUrls = await Promise.all(uploadPromises);
         imageUrls = [...imageUrls, ...newImageUrls];
       }
 
@@ -100,7 +121,7 @@ export default function AdminPage() {
       const propertyData = {
           ...restOfValues,
           amenities: amenitiesArray,
-          images: imageUrls.length > 0 ? imageUrls : (selectedProperty?.images || ['https://placehold.co/800x600.png']),
+          images: imageUrls.length > 0 ? imageUrls : ['https://placehold.co/800x600.png'],
       };
 
       if (selectedProperty) {
