@@ -2,7 +2,7 @@
 "use client";
 
 import { getPropertyById } from '@/lib/properties';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { BedDouble, Bath, Car, SquareGanttChart, Building, CheckCircle, User, Mail, Phone, Calendar, Armchair } from 'lucide-react';
 import PropertyGallery from '@/components/properties/PropertyGallery';
@@ -13,14 +13,11 @@ import type { Property } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 
-type PropertyPageProps = {
-  params: {
-    id: string;
-  };
-};
+type PropertyPageProps = {};
 
-export default function PropertyPage({ params }: PropertyPageProps) {
-  const { id: propertyId } = params;
+export default function PropertyPage({}: PropertyPageProps) {
+  const params = useParams();
+  const propertyId = params.id as string;
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
 
