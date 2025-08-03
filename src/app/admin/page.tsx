@@ -138,8 +138,8 @@ export default function AdminPage() {
     } catch (error) {
        console.error("Error submitting form: ", error);
        toast({
-         title: "Error",
-         description: "An error occurred while saving the property. Please check the console for details.",
+         title: "Error submitting form",
+         description: error instanceof Error ? error.message : "An unknown error occurred.",
          variant: "destructive",
        });
     } finally {
