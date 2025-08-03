@@ -5,26 +5,30 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/firebase';
 
 export async function uploadImages(formData: FormData): Promise<string[]> {
-  const images = formData.getAll('images') as File[];
+  const imageFiles = formData.getAll('images') as File[];
   const imageUrls: string[] = [];
 
-  if (!images || images.length === 0) {
+  if (!imageFiles || imageFiles.length === 0) {
     return [];
   }
-  
+
   try {
-    for (const image of images) {
-      if (image.size === 0) continue;
-      
-      const arrayBuffer = await image.arrayBuffer();
+    for (const imageFile of imageFiles) {
+      if (imageFile.size === 0) continue;
+
+      // Convert the file to a buffer for server-side upload
+      const arrayBuffer = await imageFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const storageRef = ref(storage, `properties/${Date.now()}-${image.name}`);
+      // Create a storage reference
+      const storageRef = ref(storage, `properties/${Date.now()}-${imageFile.name}`);
       
+      // Upload the file buffer
       await uploadBytes(storageRef, buffer, {
-        contentType: image.type,
+        contentType: imageFile.type,
       });
       
+      // Get the download URL and add it to our array
       const url = await getDownloadURL(storageRef);
       imageUrls.push(url);
     }
@@ -33,7 +37,7 @@ export async function uploadImages(formData: FormData): Promise<string[]> {
 
   } catch (error) {
     console.error("Firebase Upload Error:", error);
-    // Re-throw the error to be caught by the client
+    // Re-throw the error with a more specific message to be caught by the client
     if (error instanceof Error) {
         throw new Error(`Firebase Upload Failed: ${error.message}`);
     }
