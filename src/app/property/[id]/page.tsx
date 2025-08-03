@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { BedDouble, Bath, Car, SquareGanttChart, Building, CheckCircle, User, Mail, Phone, Calendar, Armchair } from 'lucide-react';
 import PropertyGallery from '@/components/properties/PropertyGallery';
-import AgentContactForm from '@/components/properties/AgentContactForm';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -83,19 +82,28 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 <p className="font-headline text-4xl font-bold text-navy-blue">₦{property.price.toLocaleString()}<span className="text-lg font-normal text-warm-gray">/year</span></p>
                 <div className="mt-6 space-y-4">
                     <Button asChild className="w-full bg-golden-sand text-navy-blue hover:bg-golden-sand/90 h-12 text-lg font-semibold">
-                       <Link href="#contact-agent">Schedule Inspection</Link>
+                       <Link href="/contact">Schedule Inspection</Link>
                     </Button>
                 </div>
                 <div id="contact-agent" className="mt-8">
                    <h3 className="font-headline text-2xl font-semibold text-navy-blue mb-4">Contact Agent</h3>
-                   <div className="flex items-center gap-4 mb-6 border-b border-gray-200 pb-4">
+                   <div className="flex items-center gap-4">
                         <Image src={property.agent.avatar} alt={property.agent.name} width={60} height={60} className="rounded-full" data-ai-hint="person portrait" />
                         <div>
                             <h4 className="font-bold text-lg text-navy-blue">{property.agent.name}</h4>
                             <p className="text-sm text-warm-gray">{property.agent.agency}</p>
                         </div>
                     </div>
-                   <AgentContactForm propertyTitle={property.title}/>
+                    <div className="mt-4 space-y-2 border-t pt-4">
+                      <a href={`tel:${property.agent.phone}`} className="flex items-center gap-3 text-warm-gray hover:text-navy-blue">
+                        <Phone className="h-5 w-5" />
+                        <span>{property.agent.phone}</span>
+                      </a>
+                      <a href={`mailto:${property.agent.email}`} className="flex items-center gap-3 text-warm-gray hover:text-navy-blue">
+                        <Mail className="h-5 w-5" />
+                        <span>{property.agent.email}</span>
+                      </a>
+                    </div>
                 </div>
             </div>
           </div>
