@@ -131,7 +131,7 @@ export default function PropertyPage({}: PropertyPageProps) {
                      <Button asChild className="w-full bg-green-600 text-white hover:bg-green-700 h-12 text-base font-semibold">
                        <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                           <MessageSquare className="mr-2" />
-                          Contact Seller
+                          Contact Agent
                        </a>
                     </Button>
                 </div>
