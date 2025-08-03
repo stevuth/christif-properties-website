@@ -3,6 +3,7 @@ import PropertyListings from '@/components/properties/PropertyListings';
 import { getProperties } from '@/lib/properties';
 import Image from 'next/image';
 import Link from 'next/link';
+import PropertyCard from '@/components/properties/PropertyCard';
 
 export default function Home() {
   const properties = getProperties();
@@ -52,28 +53,7 @@ export default function Home() {
           </div>
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {curatedProperties.map((property) => (
-              <div key={property.id} className="group overflow-hidden rounded-lg">
-                <Link href={`/property/${property.id}`}>
-                  <div className="relative aspect-video overflow-hidden">
-                    <Image
-                      src={property.images[0]}
-                      alt={property.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      data-ai-hint="modern interior"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-headline text-xl font-bold text-navy-blue">
-                      {property.title}
-                    </h3>
-                    <p className="text-warm-gray">{property.location.area}, {property.location.city}</p>
-                    <p className="mt-2 font-headline text-lg font-semibold text-golden-sand">
-                       ₦{property.price.toLocaleString()}/year
-                    </p>
-                  </div>
-                </Link>
-              </div>
+               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         </div>
