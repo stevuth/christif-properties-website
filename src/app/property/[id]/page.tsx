@@ -20,7 +20,7 @@ type PropertyPageProps = {
 };
 
 export default function PropertyPage({ params }: PropertyPageProps) {
-  const propertyId = String(params.id);
+  const { id: propertyId } = params;
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
 
