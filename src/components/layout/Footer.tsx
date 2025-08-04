@@ -5,7 +5,6 @@ const footerLinks = [
     { href: '/', label: 'Properties' },
     { href: '/about', label: 'About Us' },
     { href: '/contact', label: 'Contact' },
-    { href: '/admin', label: 'Admin Login' },
 ];
 
 export default function Footer() {
@@ -41,7 +40,6 @@ export default function Footer() {
             <h3 className="font-headline text-lg font-semibold">Contact Us</h3>
             <ul className="mt-4 space-y-3 text-gray-300">
               <li>No 2 Ukwuru Close, Trans Ekulu Enugu</li>
-              <li>contact@christifproperties.com</li>
               <li>+234 802 226 2178</li>
             </ul>
           </div>
