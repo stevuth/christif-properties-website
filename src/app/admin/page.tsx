@@ -25,9 +25,6 @@ import { LogOut, KeyRound, ArrowLeft } from "lucide-react";
 import ChangePasswordForm from "@/components/admin/ChangePasswordForm";
 import Link from "next/link";
 
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
-const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
-
 function AdminDashboard() {
   const { toast } = useToast();
   const { logout, user } = useAuth();
@@ -91,18 +88,18 @@ function AdminDashboard() {
     }
   };
 
-  const uploadToCloudinary = async (file: File): Promise<string> => {
+  const uploadToServer = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    const response = await fetch(`/api/upload`, {
       method: 'POST',
       body: formData,
     });
 
     if (!response.ok) {
-      throw new Error('Failed to upload image to Cloudinary.');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to upload image.');
     }
 
     const data = await response.json();
@@ -117,7 +114,7 @@ function AdminDashboard() {
       const imageFiles = values.images as FileList | null;
       if (imageFiles && imageFiles.length > 0) {
         toast({ title: `Uploading ${imageFiles.length} image(s)...`, description: "Please wait." });
-        const uploadPromises = Array.from(imageFiles).map(uploadToCloudinary);
+        const uploadPromises = Array.from(imageFiles).map(uploadToServer);
         const newImageUrls = await Promise.all(uploadPromises);
         imageUrls = [...imageUrls, ...newImageUrls];
       }
