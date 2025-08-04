@@ -19,12 +19,16 @@ import PropertyForm from "@/components/admin/PropertyForm";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
+import { LogOut } from "lucide-react";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
-export default function AdminPage() {
+function AdminDashboard() {
   const { toast } = useToast();
+  const { logout, user } = useAuth();
   const [properties, setProperties] = React.useState<Property[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [isSubmitting, setSubmitting] = React.useState(false);
@@ -164,31 +168,40 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h1 className="font-headline text-3xl md:text-4xl font-bold text-navy-blue">
-          Manage Properties
-        </h1>
-        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
-            <DialogHeader>
-              <DialogTitle className="font-headline text-2xl text-navy-blue">
-                {selectedProperty ? "Edit Property" : "Add New Property"}
-              </DialogTitle>
-              <DialogDescription>
-                  {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex-grow overflow-hidden">
-              <PropertyForm
-                onSubmit={handleFormSubmit}
-                property={selectedProperty}
-                isSubmitting={isSubmitting}
-              />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <div>
+          <h1 className="font-headline text-3xl md:text-4xl font-bold text-navy-blue">
+            Manage Properties
+          </h1>
+          <p className="text-warm-gray">Welcome, {user?.email}</p>
+        </div>
+        <div className="flex w-full sm:w-auto gap-2">
+            <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
+                <DialogHeader>
+                  <DialogTitle className="font-headline text-2xl text-navy-blue">
+                    {selectedProperty ? "Edit Property" : "Add New Property"}
+                  </DialogTitle>
+                  <DialogDescription>
+                      {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex-grow overflow-hidden">
+                  <PropertyForm
+                    onSubmit={handleFormSubmit}
+                    property={selectedProperty}
+                    isSubmitting={isSubmitting}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+            <Button onClick={logout} variant="outline" className="w-full sm:w-auto">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+            </Button>
+        </div>
       </div>
 
       {loading ? (
@@ -206,4 +219,12 @@ export default function AdminPage() {
       )}
     </div>
   );
+}
+
+export default function AdminPage() {
+    return (
+        <ProtectedRoute>
+            <AdminDashboard />
+        </ProtectedRoute>
+    )
 }

@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import WhatsAppButton from '@/components/core/WhatsAppButton';
+import { AuthProvider } from '@/context/AuthContext';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -39,13 +40,15 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <div className="relative flex min-h-dvh flex-col bg-background">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-        </div>
-        <Toaster />
+        <AuthProvider>
+          <div className="relative flex min-h-dvh flex-col bg-background">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <WhatsAppButton />
+          </div>
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
