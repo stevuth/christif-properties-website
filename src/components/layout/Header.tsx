@@ -63,14 +63,6 @@ export default function Header() {
                 Call Us
             </Button>
           </a>
-          {!user && (
-             <Link href="/login" className="hidden sm:inline-flex">
-                <Button variant="ghost">
-                    <UserIcon className="mr-2 h-4 w-4" />
-                    Admin Login
-                </Button>
-            </Link>
-          )}
           <div className="md:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
@@ -94,7 +86,7 @@ export default function Header() {
                       {link.label}
                     </Link>
                   ))}
-                   {user ? (
+                   {user && (
                       <Link
                         href="/admin"
                         onClick={() => setSheetOpen(false)}
@@ -105,16 +97,7 @@ export default function Header() {
                         >
                         Admin
                         </Link>
-                    ) : (
-                         <Link
-                            href="/login"
-                            onClick={() => setSheetOpen(false)}
-                            className="text-xl font-medium text-warm-gray transition-colors hover:text-navy-blue"
-                            >
-                           Admin Login
-                        </Link>
-                    )
-                    }
+                    )}
                 </nav>
               </SheetContent>
             </Sheet>
