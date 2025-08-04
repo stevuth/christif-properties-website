@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { Home, Menu, Building2, Phone, User as UserIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import React from 'react';
@@ -44,17 +44,6 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          {user && (
-             <Link
-              href="/admin"
-              className={cn(
-                "text-lg font-medium text-warm-gray transition-colors hover:text-navy-blue",
-                pathname === '/admin' && "text-navy-blue font-semibold"
-              )}
-            >
-              Admin
-            </Link>
-          )}
         </nav>
         <div className="flex items-center gap-2">
            <a href="tel:+2348022262178" className="hidden sm:inline-flex">
@@ -72,6 +61,9 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
+                <SheetHeader>
+                    <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                </SheetHeader>
                 <nav className="mt-8 flex flex-col gap-6">
                   {navLinks.map((link) => (
                     <Link
@@ -86,18 +78,6 @@ export default function Header() {
                       {link.label}
                     </Link>
                   ))}
-                   {user && (
-                      <Link
-                        href="/admin"
-                        onClick={() => setSheetOpen(false)}
-                        className={cn(
-                            "text-xl font-medium text-warm-gray transition-colors hover:text-navy-blue",
-                            pathname === '/admin' && "text-navy-blue font-semibold"
-                        )}
-                        >
-                        Admin
-                        </Link>
-                    )}
                 </nav>
               </SheetContent>
             </Sheet>
