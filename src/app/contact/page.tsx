@@ -1,4 +1,4 @@
-import { Phone, Mail, MessageSquare, MapPin } from 'lucide-react';
+import { Phone, MessageSquare, MapPin, Clock } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ContactPage() {
@@ -24,55 +24,68 @@ export default function ContactPage() {
       </section>
 
       <section className="py-16 md:py-24">
-        <div className="container mx-auto max-w-4xl px-4">
-          <div className="mx-auto max-w-lg space-y-8 text-center">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center">
             <h2 className="font-headline text-4xl font-bold text-navy-blue">
               Contact Information
             </h2>
-            <p className="text-lg text-warm-gray">
-              Reach out to us via phone or WhatsApp. We are available
+            <p className="mx-auto mt-4 max-w-3xl text-lg text-warm-gray">
+              Reach out to us through any of the channels below. We are available
               to assist you during our business hours.
             </p>
-            <div className="space-y-6">
-              <div className="flex items-center justify-center gap-4 text-lg">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-golden-sand/10 text-golden-sand">
-                  <MapPin className="h-6 w-6" />
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2">
+            
+            <div className="space-y-8">
+              <h3 className="font-headline text-3xl font-semibold text-navy-blue">Our Office</h3>
+               <div className="flex items-start gap-4 text-lg">
+                <div className="flex-shrink-0 pt-1">
+                  <MapPin className="h-6 w-6 text-golden-sand" />
                 </div>
                 <span>
                   No 2 Ukwuru Close, Trans Ekulu Enugu, Enugu State, Nigeria
                 </span>
               </div>
-              <a
+               <a
                 href="tel:+2348022262178"
-                className="flex items-center justify-center gap-4 text-lg transition-colors hover:text-golden-sand"
+                className="flex items-center gap-4 text-lg transition-colors hover:text-golden-sand"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-golden-sand/10 text-golden-sand">
-                  <Phone className="h-6 w-6" />
-                </div>
+                <Phone className="h-6 w-6 text-golden-sand" />
                 <span>+234 802 226 2178</span>
               </a>
               <a
                 href="https://wa.me/2348022262178"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-4 text-lg transition-colors hover:text-golden-sand"
+                className="flex items-center gap-4 text-lg transition-colors hover:text-golden-sand"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-golden-sand/10 text-golden-sand">
-                  <MessageSquare className="h-6 w-6" />
-                </div>
-                <span>WhatsApp Chat</span>
+                <MessageSquare className="h-6 w-6 text-golden-sand" />
+                <span>Chat with us on WhatsApp</span>
               </a>
             </div>
-            <div className="mt-8 border-t border-gray-200 pt-6">
-              <h3 className="text-xl font-semibold text-navy-blue">
-                Business Hours
+
+            <div className="rounded-lg bg-off-white p-8">
+              <h3 className="font-headline text-3xl font-semibold text-navy-blue">
+                 <Clock className="inline-block h-7 w-7 mr-2" />
+                 Business Hours
               </h3>
-              <p className="mt-2 text-warm-gray">
-                Monday - Friday: 9:00 AM - 6:00 PM
-              </p>
-              <p className="text-warm-gray">Saturday: 10:00 AM - 4:00 PM</p>
-              <p className="text-warm-gray">Sunday: Closed</p>
+              <ul className="mt-6 space-y-4 text-lg text-warm-gray">
+                <li className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span className="font-medium text-charcoal-black">9:00 AM - 6:00 PM</span>
+                </li>
+                 <li className="flex justify-between">
+                  <span>Saturday</span>
+                  <span className="font-medium text-charcoal-black">10:00 AM - 4:00 PM</span>
+                </li>
+                 <li className="flex justify-between">
+                  <span>Sunday</span>
+                  <span className="font-medium text-charcoal-black">Closed</span>
+                </li>
+              </ul>
             </div>
+
           </div>
         </div>
       </section>
