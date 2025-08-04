@@ -126,7 +126,7 @@ export default function PropertyPage({}: PropertyPageProps) {
                 <p className="font-headline text-3xl font-bold text-navy-blue md:text-4xl">₦{property.price.toLocaleString()}<span className="text-base font-normal text-warm-gray md:text-lg">/year</span></p>
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Button asChild className="w-full bg-navy-blue text-white hover:bg-navy-blue/90 h-12 text-base font-semibold">
-                       <Link href="/contact">Schedule Inspection</Link>
+                       <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`I'm interested in scheduling an inspection for the property: ${property.title}`)}`} target="_blank" rel="noopener noreferrer">Schedule Inspection</a>
                     </Button>
                      <Button asChild className="w-full bg-green-600 text-white hover:bg-green-700 h-12 text-base font-semibold">
                        <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
