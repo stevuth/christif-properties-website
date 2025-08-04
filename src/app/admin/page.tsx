@@ -21,7 +21,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, KeyRound, Building2 } from "lucide-react";
+import { LogOut, KeyRound, Building2, ArrowLeft } from "lucide-react";
 import ChangePasswordForm from "@/components/admin/ChangePasswordForm";
 import Link from "next/link";
 
@@ -179,6 +179,12 @@ function AdminDashboard() {
                 </span>
             </Link>
             <div className="flex items-center gap-2">
+                <Button variant="outline" asChild>
+                    <Link href="/">
+                        <ArrowLeft className="mr-0 sm:mr-2 h-4 w-4" />
+                        <span className="hidden sm:inline">Back to Website</span>
+                    </Link>
+                 </Button>
                  <Dialog open={isPasswordDialogOpen} onOpenChange={setPasswordDialogOpen}>
                   <DialogTrigger asChild>
                     <Button variant="outline">
