@@ -135,20 +135,6 @@ export default function PropertyPage({}: PropertyPageProps) {
                        </a>
                     </Button>
                 </div>
-                <div id="contact-agent" className="mt-8">
-                   <div className="flex items-center gap-4">
-                        <Image src={property.agent.avatar} alt={property.agent.name} width={60} height={60} className="rounded-full" data-ai-hint="person portrait" />
-                        <div>
-                            <p className="text-sm text-warm-gray">{property.agent.agency}</p>
-                        </div>
-                    </div>
-                    <div className="mt-4 space-y-2 border-t pt-4">
-                      <a href={`tel:${property.agent.phone}`} className="flex items-center gap-3 text-warm-gray hover:text-navy-blue">
-                        <Phone className="h-5 w-5" />
-                        <span>{property.agent.phone}</span>
-                      </a>
-                    </div>
-                </div>
             </div>
           </div>
         </div>
