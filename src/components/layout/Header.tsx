@@ -60,11 +60,11 @@ export default function Header() {
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent side="top" className="w-full">
                 <SheetHeader>
                     <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 </SheetHeader>
-                <nav className="mt-8 flex flex-col gap-6">
+                <nav className="mt-4 flex flex-col items-center gap-6">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
