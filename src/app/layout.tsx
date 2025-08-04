@@ -57,6 +57,7 @@ export default function RootLayout({
           <title>Christif Properties | Premium Homes in Enugu State</title>
           <meta name="description" content="Find verified properties for rent in Enugu, Nigeria. Browse apartments, houses, and commercial spaces with Christif Properties. Your trusted real estate partner." />
           <meta name="keywords" content="real estate enugu, property for rent enugu, houses in enugu, christif properties, nigerian real estate" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </head>
       <body
         className={cn(
