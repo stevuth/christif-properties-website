@@ -136,11 +136,9 @@ export default function PropertyPage({}: PropertyPageProps) {
                     </Button>
                 </div>
                 <div id="contact-agent" className="mt-8">
-                   <h3 className="font-headline text-xl font-semibold text-navy-blue mb-4 md:text-2xl">Contact Agent</h3>
                    <div className="flex items-center gap-4">
                         <Image src={property.agent.avatar} alt={property.agent.name} width={60} height={60} className="rounded-full" data-ai-hint="person portrait" />
                         <div>
-                            <h4 className="font-bold text-base text-navy-blue md:text-lg">{property.agent.name}</h4>
                             <p className="text-sm text-warm-gray">{property.agent.agency}</p>
                         </div>
                     </div>
@@ -148,10 +146,6 @@ export default function PropertyPage({}: PropertyPageProps) {
                       <a href={`tel:${property.agent.phone}`} className="flex items-center gap-3 text-warm-gray hover:text-navy-blue">
                         <Phone className="h-5 w-5" />
                         <span>{property.agent.phone}</span>
-                      </a>
-                      <a href={`mailto:${property.agent.email}`} className="flex items-center gap-3 text-warm-gray hover:text-navy-blue">
-                        <Mail className="h-5 w-5" />
-                        <span>{property.agent.email}</span>
                       </a>
                     </div>
                 </div>
