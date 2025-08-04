@@ -1,3 +1,4 @@
+
 import { Phone, MessageSquare, MapPin, Clock } from 'lucide-react';
 import Image from 'next/image';
 
@@ -73,7 +74,7 @@ export default function ContactPage() {
               <ul className="mt-6 space-y-4 text-lg text-warm-gray">
                 <li className="flex justify-between">
                   <span>Monday - Friday</span>
-                  <span className="font-medium text-charcoal-black">9:00 AM - 6:00 PM</span>
+                  <span className="font-medium text-charcoal-black">8:00 AM - 6:00 PM</span>
                 </li>
                  <li className="flex justify-between">
                   <span>Saturday</span>
