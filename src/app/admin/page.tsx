@@ -21,7 +21,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut } from "lucide-react";
+import { LogOut, KeyRound } from "lucide-react";
+import ChangePasswordForm from "@/components/admin/ChangePasswordForm";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
@@ -32,7 +33,8 @@ function AdminDashboard() {
   const [properties, setProperties] = React.useState<Property[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [isSubmitting, setSubmitting] = React.useState(false);
-  const [isDialogOpen, setDialogOpen] = React.useState(false);
+  const [isPropertyDialogOpen, setPropertyDialogOpen] = React.useState(false);
+  const [isPasswordDialogOpen, setPasswordDialogOpen] = React.useState(false);
   const [selectedProperty, setSelectedProperty] = React.useState<Property | null>(null);
 
   const fetchProperties = React.useCallback(async () => {
@@ -62,12 +64,12 @@ function AdminDashboard() {
 
   const handleAddProperty = () => {
     setSelectedProperty(null);
-    setDialogOpen(true);
+    setPropertyDialogOpen(true);
   };
 
   const handleEditProperty = (property: Property) => {
     setSelectedProperty(property);
-    setDialogOpen(true);
+    setPropertyDialogOpen(true);
   };
 
   const handleDeleteProperty = async (propertyId: string) => {
@@ -152,7 +154,7 @@ function AdminDashboard() {
         });
       }
       fetchProperties();
-      setDialogOpen(false);
+      setPropertyDialogOpen(false);
     } catch (error) {
        console.error("Error submitting form: ", error);
        toast({
@@ -174,8 +176,8 @@ function AdminDashboard() {
           </h1>
           <p className="text-warm-gray">Welcome, {user?.email}</p>
         </div>
-        <div className="flex w-full sm:w-auto gap-2">
-            <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+        <div className="flex flex-wrap w-full sm:w-auto gap-2">
+            <Dialog open={isPropertyDialogOpen} onOpenChange={setPropertyDialogOpen}>
               <DialogTrigger asChild>
                 <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
               </DialogTrigger>
@@ -197,6 +199,23 @@ function AdminDashboard() {
                 </div>
               </DialogContent>
             </Dialog>
+
+            <Dialog open={isPasswordDialogOpen} onOpenChange={setPasswordDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="w-full sm:w-auto">
+                    <KeyRound className="mr-2 h-4 w-4" />
+                    Change Password
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                 <DialogHeader>
+                    <DialogTitle className="font-headline text-2xl text-navy-blue">Change Password</DialogTitle>
+                    <DialogDescription>Enter a new password for your account.</DialogDescription>
+                 </DialogHeader>
+                 <ChangePasswordForm onFinished={() => setPasswordDialogOpen(false)} />
+              </DialogContent>
+            </Dialog>
+            
             <Button onClick={logout} variant="outline" className="w-full sm:w-auto">
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
