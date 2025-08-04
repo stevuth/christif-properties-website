@@ -32,14 +32,14 @@ type PropertyTableProps = {
 
 export default function PropertyTable({ properties, onEdit, onDelete }: PropertyTableProps) {
   return (
-    <div className="rounded-lg border">
+    <div className="rounded-lg border w-full overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
             <TableHead className="hidden md:table-cell">Location</TableHead>
             <TableHead className="hidden lg:table-cell">Price</TableHead>
-            <TableHead className="hidden md:table-cell">Type</TableHead>
+            <TableHead className="hidden sm:table-cell">Type</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -49,7 +49,7 @@ export default function PropertyTable({ properties, onEdit, onDelete }: Property
               <TableCell className="font-medium max-w-[150px] md:max-w-xs truncate">{property.title}</TableCell>
               <TableCell className="hidden md:table-cell">{property.location.area}, {property.location.city}</TableCell>
               <TableCell className="hidden lg:table-cell">₦{property.price.toLocaleString()}</TableCell>
-              <TableCell className="hidden md:table-cell">{property.type}</TableCell>
+              <TableCell className="hidden sm:table-cell">{property.type}</TableCell>
               <TableCell className="text-right">
                 <Button variant="ghost" size="icon" onClick={() => onEdit(property)}>
                   <Edit className="h-4 w-4" />

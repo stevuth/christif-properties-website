@@ -182,8 +182,8 @@ function AdminDashboard() {
                  <Dialog open={isPasswordDialogOpen} onOpenChange={setPasswordDialogOpen}>
                   <DialogTrigger asChild>
                     <Button variant="outline">
-                        <KeyRound className="mr-2 h-4 w-4" />
-                        Change Password
+                        <KeyRound className="mr-0 sm:mr-2 h-4 w-4" />
+                        <span className="hidden sm:inline">Change Password</span>
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="max-w-md">
@@ -196,8 +196,8 @@ function AdminDashboard() {
                 </Dialog>
                 
                 <Button onClick={logout} variant="outline">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
+                    <LogOut className="mr-0 sm:mr-2 h-4 w-4" />
+                    <span className="hidden sm:inline">Logout</span>
                 </Button>
             </div>
         </div>
