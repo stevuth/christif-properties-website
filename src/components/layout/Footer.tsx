@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Instagram, MessageSquare, Twitter } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 const footerLinks = [
     { href: '/', label: 'Properties' },
@@ -48,17 +48,9 @@ export default function Footer() {
           <div>
             <h3 className="font-headline text-lg font-semibold">Connect With Us</h3>
             <div className="mt-4 flex justify-center gap-4 md:justify-start">
-              <Link href="https://wa.me/2348022262178" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="text-gray-300 transition-colors hover:text-golden-sand">
+              <Link href="https://wa.me/2348022262178" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex items-center gap-2 text-gray-300 transition-colors hover:text-golden-sand">
                 <MessageSquare className="h-6 w-6" />
-              </Link>
-              <Link href="#" aria-label="Facebook" className="text-gray-300 transition-colors hover:text-golden-sand">
-                <Facebook className="h-6 w-6" />
-              </Link>
-              <Link href="#" aria-label="Twitter" className="text-gray-300 transition-colors hover:text-golden-sand">
-                <Twitter className="h-6 w-6" />
-              </Link>
-              <Link href="#" aria-label="Instagram" className="text-gray-300 transition-colors hover:text-golden-sand">
-                <Instagram className="h-6 w-6" />
+                <span>WhatsApp</span>
               </Link>
             </div>
           </div>
