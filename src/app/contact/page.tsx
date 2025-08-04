@@ -74,7 +74,7 @@ export default function ContactPage() {
               <ul className="mt-6 space-y-4 text-lg text-warm-gray">
                 <li className="flex justify-between flex-nowrap">
                   <span className="whitespace-nowrap">Monday - Friday</span>
-                  <span className="font-medium text-charcoal-black text-right pl-4">8:00 AM - 6:00 PM</span>
+                  <span className="font-medium text-charcoal-black text-right pl-4 whitespace-nowrap">8:00 AM - 6:00 PM</span>
                 </li>
                  <li className="flex justify-between">
                   <span>Saturday</span>
