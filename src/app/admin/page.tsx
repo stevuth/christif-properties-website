@@ -21,8 +21,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, KeyRound } from "lucide-react";
+import { LogOut, KeyRound, Building2 } from "lucide-react";
 import ChangePasswordForm from "@/components/admin/ChangePasswordForm";
+import Link from "next/link";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
@@ -168,74 +169,88 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <div>
-          <h1 className="font-headline text-3xl md:text-4xl font-bold text-navy-blue">
-            Manage Properties
-          </h1>
-          <p className="text-warm-gray">Welcome, {user?.email}</p>
-        </div>
-        <div className="flex flex-wrap w-full sm:w-auto gap-2">
-            <Dialog open={isPropertyDialogOpen} onOpenChange={setPropertyDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
-                <DialogHeader>
-                  <DialogTitle className="font-headline text-2xl text-navy-blue">
-                    {selectedProperty ? "Edit Property" : "Add New Property"}
-                  </DialogTitle>
-                  <DialogDescription>
-                      {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="flex-grow overflow-hidden">
-                  <PropertyForm
-                    onSubmit={handleFormSubmit}
-                    property={selectedProperty}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </DialogContent>
-            </Dialog>
-
-            <Dialog open={isPasswordDialogOpen} onOpenChange={setPasswordDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="w-full sm:w-auto">
-                    <KeyRound className="mr-2 h-4 w-4" />
-                    Change Password
+    <div className="bg-background min-h-screen">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-20 max-w-7xl items-center justify-between px-4">
+            <Link href="/" className="flex items-center gap-2">
+                <Building2 className="h-8 w-8 text-navy-blue" />
+                <span className="font-headline text-2xl font-bold text-navy-blue">
+                    Christif Properties
+                </span>
+            </Link>
+            <div className="flex items-center gap-2">
+                 <Dialog open={isPasswordDialogOpen} onOpenChange={setPasswordDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                        <KeyRound className="mr-2 h-4 w-4" />
+                        Change Password
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                     <DialogHeader>
+                        <DialogTitle className="font-headline text-2xl text-navy-blue">Change Password</DialogTitle>
+                        <DialogDescription>Enter a new password for your account.</DialogDescription>
+                     </DialogHeader>
+                     <ChangePasswordForm onFinished={() => setPasswordDialogOpen(false)} />
+                  </DialogContent>
+                </Dialog>
+                
+                <Button onClick={logout} variant="outline">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md">
-                 <DialogHeader>
-                    <DialogTitle className="font-headline text-2xl text-navy-blue">Change Password</DialogTitle>
-                    <DialogDescription>Enter a new password for your account.</DialogDescription>
-                 </DialogHeader>
-                 <ChangePasswordForm onFinished={() => setPasswordDialogOpen(false)} />
-              </DialogContent>
-            </Dialog>
-            
-            <Button onClick={logout} variant="outline" className="w-full sm:w-auto">
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-            </Button>
+            </div>
         </div>
-      </div>
+      </header>
 
-      {loading ? (
-        <div className="space-y-4">
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-12 w-full" />
+      <main className="container mx-auto py-12 px-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+            <div>
+            <h1 className="font-headline text-3xl md:text-4xl font-bold text-navy-blue">
+                Manage Properties
+            </h1>
+            <p className="text-warm-gray">Welcome, {user?.email}</p>
+            </div>
+            <div className="flex flex-wrap w-full sm:w-auto gap-2">
+                <Dialog open={isPropertyDialogOpen} onOpenChange={setPropertyDialogOpen}>
+                <DialogTrigger asChild>
+                    <Button onClick={handleAddProperty} className="bg-golden-sand text-navy-blue hover:bg-golden-sand/90 w-full sm:w-auto">Add New Property</Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
+                    <DialogHeader>
+                    <DialogTitle className="font-headline text-2xl text-navy-blue">
+                        {selectedProperty ? "Edit Property" : "Add New Property"}
+                    </DialogTitle>
+                    <DialogDescription>
+                        {selectedProperty ? "Update the details of this property." : "Fill in the form to add a new property."}
+                    </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex-grow overflow-hidden">
+                    <PropertyForm
+                        onSubmit={handleFormSubmit}
+                        property={selectedProperty}
+                        isSubmitting={isSubmitting}
+                    />
+                    </div>
+                </DialogContent>
+                </Dialog>
+            </div>
         </div>
-      ) : (
-        <PropertyTable
-          properties={properties}
-          onEdit={handleEditProperty}
-          onDelete={handleDeleteProperty}
-        />
-      )}
+
+        {loading ? (
+            <div className="space-y-4">
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            </div>
+        ) : (
+            <PropertyTable
+            properties={properties}
+            onEdit={handleEditProperty}
+            onDelete={handleDeleteProperty}
+            />
+        )}
+      </main>
     </div>
   );
 }
