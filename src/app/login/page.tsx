@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Building2, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -46,8 +46,10 @@ export default function LoginPage() {
     <div className="flex min-h-[80vh] items-center justify-center bg-gray-100">
       <Card className="w-full max-w-md mx-4">
         <CardHeader className="text-center">
-            <div className="mx-auto flex items-center justify-center gap-2 mb-4">
-                 <Building2 className="h-8 w-8 text-navy-blue" />
+            <div className="mx-auto flex items-center justify-center gap-3 mb-4">
+                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-navy-blue text-white">
+                    <span className="font-headline text-xl font-bold">CF</span>
+                 </div>
                 <span className="font-headline text-2xl font-bold text-navy-blue">
                     Christif Properties
                 </span>

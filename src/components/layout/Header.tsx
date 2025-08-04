@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Home, Menu, Building2, Phone, User as UserIcon } from 'lucide-react';
+import { Home, Menu, Phone, User as UserIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
@@ -25,9 +25,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 max-w-7xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <Building2 className="h-8 w-8 text-navy-blue" />
-          <span className="font-headline text-2xl font-bold text-navy-blue">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-blue text-white">
+            <span className="font-headline text-lg font-bold">CF</span>
+          </div>
+          <span className="hidden font-headline text-2xl font-bold text-navy-blue sm:inline-block">
             Christif Properties
           </span>
         </Link>

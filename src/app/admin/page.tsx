@@ -21,7 +21,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { PropertyFormValues } from "@/components/admin/PropertyForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, KeyRound, Building2, ArrowLeft } from "lucide-react";
+import { LogOut, KeyRound, ArrowLeft } from "lucide-react";
 import ChangePasswordForm from "@/components/admin/ChangePasswordForm";
 import Link from "next/link";
 
@@ -172,11 +172,13 @@ function AdminDashboard() {
     <div className="bg-background min-h-screen">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-20 max-w-7xl items-center justify-between px-4">
-            <Link href="/" className="flex items-center gap-2">
-                <Building2 className="h-8 w-8 text-navy-blue" />
-                <span className="font-headline text-2xl font-bold text-navy-blue">
-                    Christif Properties
-                </span>
+            <Link href="/" className="flex items-center gap-3">
+               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-blue text-white">
+                  <span className="font-headline text-lg font-bold">CF</span>
+               </div>
+               <span className="hidden font-headline text-2xl font-bold text-navy-blue sm:inline-block">
+                  Christif Properties
+               </span>
             </Link>
             <div className="flex items-center gap-2">
                 <Button variant="outline" asChild>
